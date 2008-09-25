@@ -1,0 +1,374 @@
+% vim: set fileencoding=utf-8 encoding=utf-8:
+\documentclass[11pt,spanish]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+%\usepackage{fullpage}
+\usepackage{url}
+\usepackage{times}
+%\usepackage{mathrsfs} 
+\usepackage{amsmath} 
+%\usepackage{amssymb} 
+%\usepackage{amsbsy} 
+%\usepackage{cancel}
+%\usepackage[dvips]{graphicx} 
+
+\newcommand{\reftitle}{\textit}
+
+\title{Proyecto de Tesis \\
+    Magíster en Ciencias de la Ingeniería Informática \\
+    \textsc{Borrador \#1}
+}
+\author{Roberto Bonvallet}
+\date{Primavera de 2008}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\begin{enumerate}
+    \item \textbf{Título del Proyecto de Tesis:}
+ 
+    \item \textbf{Nombre del Alumno:}
+        Roberto Javier Bonvallet Carrasco
+    \item \textbf{Número de Teléfono:}
+        no tiene
+         
+    \item \textbf{E-mail:}
+        \texttt{rbonvall@inf.utfsm.cl}
+    \item \textbf{Fecha de ingreso al programa:}
+        Primer semestre de 2006
+    \item \textbf{Pregrado:}
+        Licenciatura en Ingeniería Informática, UTFSM, 2006
+    \item \textbf{Profesor guía de tesis:}
+        Luis Salinas Carrasco
+    \item \textbf{Fecha presentación tema de tesis:}
+    \item \textbf{Fecha aprobación tema de tesis:}
+    \item \textbf{Fecha tentativa de término:}
+    \item \textbf{Comisión interna de graduación:}
+\end{enumerate}
+
+\newpage
+\section*{Resumen}
+
+\emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
+objetivos,  resultados esperados y palabras claves. }
+
+\section*{Abstract}
+
+\emph{Lo mismo, en inglés}
+
+\newpage
+\section{Formulación General de la Problemática y Propuesta de Tesis}
+
+\emph{Debe contener la exposición general del problema, identificando claramente qué
+aspectos relacionados con la informática son los más relevantes.  Además,
+deberá contener el marco teórico, la discusión bibliográfica con sus
+referencias y, finalmente, su propuesta de tesis.}
+    
+\emph{(La extensión máxima de esta sección es de hasta 5 páginas.  En hojas
+adicionales incluya la lista de referencias)}
+ 
+
+Tesis: implementación de métodos de partículas con componentes
+implementados en la GPU, e integrados en un lenguaje de programación
+dinámico de alto nivel.
+
+
+\subsection{Computación de alto desempeño}
+
+Desde los inicios de la computación, ha existido una demanda creciente de poder
+computacional en las áreas de la ciencia y la ingeniería.  A medida que ha
+aumentado la capacidad de cómputo disponible, también han crecido el tamaño y la
+complejidad de los problemas que se necesita resolver, y en el caso de los
+problemas más complejos, no es posible hacerlo en un tiempo razonable.
+\cite{parallel-programming}
+
+La computación de alto desempeño (HPC) es la utilización de supercomputadores y
+clústers de computadores para resolver problemas computacionales complejos.  Los
+conceptos claves en HPC son:
+
+\begin{itemize}
+   \item paralelismo:
+     la capacidad de ejecutar instrucciones concurrentemente;
+   \item escalabilidad:
+     la capacidad de acomodarse a problemas de tamaño creciente;
+   \item computación commodity:
+     sistemas computacionales construídos con hardware
+     estándar y de bajo costo, con componentes de software off-the-shelf
+     (interoperabilidad).
+\end{itemize}
+
+La tendencia actual en sistemas de HPC y en diseño de arquitecturas de hardware
+ya no apunta a mejorar el rendimiento de las unidades de cómputo por separado,
+sino a explotar el paralelismo para obtener mejoras en el desempeño final de un
+programa, a pesar de la carga adicional que significa manejar la concurrencia.
+(preferir high throughput sobre high performance)
+\cite{hpc-gpu-cuda-slides}
+
+\subsection{Computación en hardware gráfico}
+Las unidades de procesamiento gráfico (GPU) son componentes de hardware diseñados
+originalmente para acelerar aplicaciones de computación gráfica (CG), que son
+intensivas en cómputo y requieren resultados en tiempo real.  Las
+características de una aplicación gráfica que pueden ser efectivamente
+paralelizadas, y que son explotadas por la GPU, son:
+
+\begin{itemize}
+  \item stream processing:
+    las operaciones visuales suelen ser independientes entre
+    píxeles, y pueden ejecutarse concurrentemente;  destinando procesadores
+    separados para cada operación es como las GPUs obtienen la mayor ganancia
+    en desempeño
+    \cite[\S3.2]{gpupp}
+
+  \item pipelining:
+    las diferentes etapas de un algoritmo gráfico (p.ej.
+    transformaciones espaciales, aplicación de texturas, rasterización)
+    forman una estructura de tubería (pipeline), en que la salida de una etapa
+    sirve de entrada a la siguiente;  las GPUs implementan este pipeline en
+    hardware, ofreciendo cierto control sobre sus etapas.
+    \cite[\S 3.1]{pygpu}
+
+  \item vector processing:
+    casi todas las cantidades involucradas en computación
+    gráfica son vectores (colores, puntos, segmentos, direccionamiento en
+    texturas); por ello, las instrucciones de la GPU operan sobre 4-vectores de
+    números de coma flotante, en lugar de sobre cantidades escalares.
+    [GPU++, 3.3]
+\end{itemize}
+
+En la última década, las GPUs han evolucionado rápidamente en términos de
+capacidad computacional y de programabilidad.  La capacidad de cómputo ya supera
+por un orden de magnitud la de las CPUs, y 
+
+En la actualidad ya se considera a las GPUs una parte integral del repertorio
+de aplicaciones HPC.
+\cite{gpu-computing}
+
+
+\subsection{Programación científica de alto nivel con GPUs}
+
+
+\subsection{Dinámica de fluídos computacional}
+Una de las áreas de investigación que tradicionalmente ha tenido requerimientos
+exigentes de poder de cómputo para hacer simulaciones es la dinámica de fluídos.
+La dinámica de fluídos computacional tiene importantes aplicaciones industriales
+en diversas áreas como la aeronáutica, la meteorología y la geología.
+
+La dinámica de fluídos estudia los fluídos en movimiento.  Los problemas de la
+dinámica de fluídos consisten en calcular varias propiedades del fluído (p.ej.
+la velocidad, la presión, la densidad, la temperatura) en todo el dominio del
+espacio, a lo largo de un intervalo de tiempo.  Estas propiedades se llaman
+variables de estado, y están relacionadas por leyes de conservación y ecuaciones
+de estado.
+
+La ecuación más importante de la dinámica de fluídos es la ecuación de
+Navier-Stokes, que describe el movimiento de un fluido viscoso conductor de
+calor, y representa la conservación de momentum, de manera análoga a la segunda
+ley de Newton:
+
+  (ec. de N-S)
+
+
+La dinámica de fluídos computacional (CFD) usa métodos numéricos para resolver
+problemas que involucran fluídos.  Las simulaciones de fluídos ofrecen varias
+dificultades:
+
+\begin{itemize}
+  \item problemas numéricos debido a la no linearidad de las ecuaciones subyacentes,
+  \item la turbulencia, que es el comportamiento caótico que presentan los fluídos
+    bajo ciertas condiciones;  es difícil de cuantificar o
+    caracterizar, y existen sólo modelos empíricos para hacerlo.
+\end{itemize}
+
+
+
+\subsection{Métodos de partículas}
+La mayoría de los métodos de CFD discretizan el dominio del problema utilizando
+algún tipo de malla.  Los métodos de partículas, en cambio, simulan el fluído
+utilizando partículas que transportan distribuciones localizadas de las
+variables de estado, y que son arrastradas por el fluído.
+
+Los métodos de partículas son una clase de métodos basados en la discretización
+de la forma lagrangiana de las ecuaciones subyacentes.  Esta forma evita la
+discretización del término convectivo de la forma original.
+
+Un tipo importante de métodos de partículas son los métodos de vórtices (VM),
+que han sido utilizados desde la década de 1930 para describir la evolución de
+estructuras vorticales en fluídos incompresibles.
+\cite{multiscale}
+Los VMs resuelven la ecuación de Navier-Stokes en su formulación
+velocidad-vorticidad:
+\begin{equation}
+    \frac{\partial {\omega}}{\partial t} + ...
+\end{equation}
+donde $\mathbf{u}$ es la velocidad
+y $\omega = \nabla\times\mathbf{u}$ es la vorticidad.
+
+
+
+
+
+
+
+
+ 
+ 
+
+ 
+
+\section{Hipótesis de Trabajo}
+
+\emph{Formule las hipótesis de trabajo señalando claramente su conjetura.}
+\emph{(Su extensión no debe exceder el espacio disponible) }
+ 
+ 
+
+\section{Objetivos }
+
+\subsection{Objetivos Generales}
+
+\emph{(Su extensión no debe exceder el espacio disponible)}
+
+\subsection{Objetivos Específicos}
+
+\emph{(Su extensión no debe exceder el espacio disponible) }
+       
+
+ 
+
+\section{Metodología y Plan de Trabajo}
+
+\emph{(Su extensión no debe exceder el espacio disponible)}
+
+ 
+\section{Resultados}
+
+\subsection{Aportes y Resultados Esperados}
+
+\emph{(Su extensión no debe exceder el espacio disponible)}
+ 
+
+\subsection{Formas de Validación}
+
+\emph{(Su extensión no debe exceder el espacio disponible)}
+
+ 
+ 
+ 
+
+ 
+
+\section{Recursos}
+
+\subsection{Recursos disponibles}
+
+\emph{Señale medios y recursos con que cuenta el Departamento de Informática de
+la UTFSM, para realizar el proyecto de tesis (libros, software, laboratorios,
+etc.).}
+
+\emph{(Su extensión no debe exceder el espacio disponible) }
+
+\subsection{Recursos solicitados}
+
+\emph{Señale medios y recursos no disponibles en el Departamento de Informática
+de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
+laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
+
+
+
+
+\begin{thebibliography}{99}
+    \bibitem{gpu-computing}
+    John D.~Owens et~al.
+    \reftitle{GPU Computing.}
+    Proceedings of the IEEE, May 2008.
+
+    \bibitem{parallel-programming}
+    Barru Wilkinson, Michael Allen.
+    \reftitle{Parallel Programming.}
+
+    \bibitem{hpc-gpu-cuda-slides}
+    HPC GPU CUDA slides.
+
+    \bibitem{gpupp}
+    Thomas C.~Jansen.
+    \reftitle{GPU++: An Embedded GPU Development System for
+      General-Purpose Computations.}
+    Tesis doctoral, Technischen Universität München, 2007.
+
+    \bibitem{pygpu}
+    Calle Lejdfors.
+    \reftitle{High-level GPU programming: Domain-specifi optimization and inference.}
+    Tesis doctoral, Lund University, 2008.
+
+    \bibitem{multiscale}
+    Petros Koumoutsakos.
+    \reftitle{Multiscale Flow Simulations Using Particles.}
+    Annu.~Rev. Fluid~Mech. 37~(2005) 457--487.
+
+    \bibitem{ppm}
+    I.F.~Sbalzarini et~al.
+    \reftitle{PPM -~A highly efficient parallel particle-mesh library
+      for the simulation of continuum systems.}
+    Journal of Computational Physics 215~(2006) 566--588.
+
+    \bibitem{vortex-gpu}
+    Diego Rossinelli, Petros Koumoutsakos.
+    \reftitle{Vortex methods for incompressible flow simulations on the GPU.}
+    Visual Comput~(2008).
+
+    \bibitem{brookgpu}
+    Ian Buck et~al.
+    \reftitle{Brook for GPUs: Stream Computing on Graphics Hardware.}
+    Stanford University.
+
+\end{thebibliography}
+
+
+
+
+
+%\section*{Abstract}
+%Stream computing is a parallel computing paradigm in which large streams of data
+%flow through kernel functions, capable of performing non-trivial operations in
+%parallel. Streaming architectures achieve high-troughput by exploiting
+%algorithms that exhibit high arithmetic intensity.
+%
+%This paradigm is well-suited for computation on commodity graphic hardware.
+%Current graphic processing units are agressively pipelined processors, and are
+%capable to perform general-purpose floating-point computation with one order of
+%magnitude better performance than CPUs. Vendor-provided APIs are moving from
+%supporting only graphic-related operations towards more generic programming
+%models.
+%
+%Still, GPUs still offer a very restricted programming model. Currently there is
+%active development in order to integrate streaming low-level APIs into
+%higher-level programming languages, including highly dynamic languages. Several
+%different approaches have been implemented, allowing to exploit agressive
+%parallelism, while keeping the advantages of high-level development.
+%
+%As opposed to these frameworks, that aim at providing a generic set of operations
+%suitable for a wide class of algorithms, this work explores the design of
+%high-level stream-computing operations specifically for implementing particle
+%methods in fluid dynamics, tailored to tackle the performance bottlenecks of
+%this kind of methods.
+%
+%Particle methods solve transport problems by advecting discrete particles that
+%carry the transported quantities, in order to solve the governing equations in
+%their Lagrangian form. As all computational fluid dynamics techniques, these
+%methods require large computational power, and can enjoy significant speedups by
+%exploiting parallelism.
+%
+%A top-down approach for this specific domain will be adopted, by decomposing
+%high-level implementations into parts that are suitable for being parallelized,
+%taking into account the perfomance tradeoffs implied with each decision.
+
+\end{document}
+% Observaciones y sugerencias
+% 1. No esta claro por que hacer esto. Cuales son los beneficios que se esperan.
+% 2. ¿Por que las otras propuestas no son adecuadas para el particle methods?
+% 3. Me llama la atencion que se plantee una tesis de Doctorado para un prob-
+%    lema particular. Que de interesante tiene este problema ?, ¿ es facil ex-
+%    tender la solucion a otros problemas en otrosambitos?
+% 4. Plantear claramente las hipotesis.
+% 5. En la presentacion considerar referencias bibliograficas que avalen la prop-
+%    uesta, es decir, que justifiquen la necesiddad (si es que existen).
