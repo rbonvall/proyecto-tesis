@@ -2,7 +2,7 @@
 \documentclass[11pt,spanish]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
-%\usepackage{fullpage}
+\usepackage{fullpage}
 \usepackage{url}
 \usepackage{times}
 %\usepackage{mathrsfs} 
@@ -13,6 +13,9 @@
 %\usepackage[dvips]{graphicx} 
 
 \newcommand{\reftitle}{\textit}
+\newcommand{\vel}{\mathbf{u}}
+\newcommand{\vort}{\mathbf{\omega}}
+\newcommand{\pos}{\mathbf{x}}
 
 \title{Proyecto de Tesis \\
     Magíster en Ciencias de la Ingeniería Informática \\
@@ -71,6 +74,9 @@ adicionales incluya la lista de referencias)}
 Tesis: implementación de métodos de partículas con componentes
 implementados en la GPU, e integrados en un lenguaje de programación
 dinámico de alto nivel.
+
+El trabajo de tesis propuesto consiste en la implementación de métodos de
+partículas en un lenguaje de programación dinámico de alto nivel, implementando
 
 
 \subsection{Computación de alto desempeño}
@@ -132,7 +138,7 @@ paralelizadas, y que son explotadas por la GPU, son:
     gráfica son vectores (colores, puntos, segmentos, direccionamiento en
     texturas); por ello, las instrucciones de la GPU operan sobre 4-vectores de
     números de coma flotante, en lugar de sobre cantidades escalares.
-    [GPU++, 3.3]
+    \cite[3.3]{gpupp}
 \end{itemize}
 
 En la última década, las GPUs han evolucionado rápidamente en términos de
@@ -155,58 +161,82 @@ en diversas áreas como la aeronáutica, la meteorología y la geología.
 
 La dinámica de fluídos estudia los fluídos en movimiento.  Los problemas de la
 dinámica de fluídos consisten en calcular varias propiedades del fluído (p.ej.
-la velocidad, la presión, la densidad, la temperatura) en todo el dominio del
-espacio, a lo largo de un intervalo de tiempo.  Estas propiedades se llaman
-variables de estado, y están relacionadas por leyes de conservación y ecuaciones
-de estado.
+la velocidad $\vel$, la presión $p$, la densidad $\rho$, la temperatura $T$) en
+todo el dominio del fluido, durante un intervalo de tiempo.  Estas propiedades
+se llaman variables de estado, y están relacionadas por leyes de conservación y
+ecuaciones de estado.
+
+En general los problemas de dinámica de fluídos no se pueden resolver
+analíticamente excepto en casos triviales.  La dinámica de fluídos computacional
+(CFD) usa métodos numéricos para resolver estos problemas, que aun así siguen
+siendo complejos:  incluso con ecuaciones simplificadas y usando recursos de
+HPC, sólo es posible obtener soluciones aproximadas.
 
 La ecuación más importante de la dinámica de fluídos es la ecuación de
-Navier-Stokes, que describe el movimiento de un fluido viscoso conductor de
-calor, y representa la conservación de momentum, de manera análoga a la segunda
-ley de Newton:
+Navier-Stokes, que describe la conservación de momentum en un fluido viscoso,
+de manera análoga a la segunda ley de Newton.  
+\begin{equation}
+    \rho\left(\frac{\partial\vel}{dt} + \vel\cdot\nabla\vel \right) =
+    \nu\Delta\vel - \nabla p + \mathbf{f}.
+\end{equation}
+El término $\rho(\vel\cdot\nabla\vel)$ es denominado aceleración convectiva, y
+explica cómo cambia la velocidad con respecto a la posición en un instante de
+tiempo fijo.  Este es el único término no lineal de la ecuación, lo que acarrea
+problemas numéricos al discretizar el problema, y en la práctica representa el
+principal aporte a la turbulencia del fluído.
 
-  (ec. de N-S)
-
-
-La dinámica de fluídos computacional (CFD) usa métodos numéricos para resolver
-problemas que involucran fluídos.  Las simulaciones de fluídos ofrecen varias
-dificultades:
-
-\begin{itemize}
-  \item problemas numéricos debido a la no linearidad de las ecuaciones subyacentes,
-  \item la turbulencia, que es el comportamiento caótico que presentan los fluídos
-    bajo ciertas condiciones;  es difícil de cuantificar o
-    caracterizar, y existen sólo modelos empíricos para hacerlo.
-\end{itemize}
-
-
+La turbulencia es el comportamiento caótico observado en los fluídos.  Es un
+fenómeno cuya naturaleza no está bien comprendida, y es difícil de cuantificar y
+de describir.  Los métodos numéricos para fluídos turbulentos deben incorporar
+algún tipo de modelo de turbulencia, generalmente con base experimental, para
+dar cuenta de ella.  Además, la turbulencia emerge en varios niveles de escala,
+lo que exige alta resolución en la discretización de los problemas, y por lo
+tanto más poder computacional.
 
 \subsection{Métodos de partículas}
 La mayoría de los métodos de CFD discretizan el dominio del problema utilizando
-algún tipo de malla.  Los métodos de partículas, en cambio, simulan el fluído
-utilizando partículas que transportan distribuciones localizadas de las
-variables de estado, y que son arrastradas por el fluído.
+algún tipo de malla.  Los métodos de partículas (PM), en cambio, son una clase
+de métodos que utilizan partículas discretas que arrastran distribuciones
+localizadas de variables de estado por el fluído.  Las propiedades físicas del
+fluído pueden ser recuperadas como combinaciones lineales de las distribuciones
+de todas las partículas.
 
-Los métodos de partículas son una clase de métodos basados en la discretización
-de la forma lagrangiana de las ecuaciones subyacentes.  Esta forma evita la
-discretización del término convectivo de la forma original.
+Los PMs están basados en la forma lagrangiana de las ecuaciones subyacentes.
+La forma lagrangiana utiliza como marco de referencia las trayectorias de las
+partículas en el tiempo, y en ella no aparece el término de aceleración
+convectiva.  Las ecuaciones pasan a ser un sistema de ecuaciones diferenciales
+ordinarias:
+\begin{align}
+    \frac{d\pos_p}{dt} &= \vel_p(\pos_p, t) =
+        \sum_{p'} \mathbf{K}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'}) \\
+    \frac{d\xi_p}{dt} &=
+        \sum_{p'} \mathbf{F}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'})
+\end{align}
+donde $\xi$ es alguna propiedad del fluído, y $\mathbf{K}$ y $\mathbf{F}$ 
+representan la dinámica del sistema físico simulado.
 
 Un tipo importante de métodos de partículas son los métodos de vórtices (VM),
 que han sido utilizados desde la década de 1930 para describir la evolución de
-estructuras vorticales en fluídos incompresibles.
-\cite{multiscale}
-Los VMs resuelven la ecuación de Navier-Stokes en su formulación
-velocidad-vorticidad:
-\begin{equation}
-    \frac{\partial {\omega}}{\partial t} + ...
-\end{equation}
-donde $\mathbf{u}$ es la velocidad
-y $\omega = \nabla\times\mathbf{u}$ es la vorticidad.
+estructuras vorticales en fluídos incompresibles~\cite{multiscale}.
+En los últimos años se ha demostrado resultados importantes acerca de la
+convergencia y 
+
+%Los VMs resuelven la ecuación de Navier-Stokes en su formulación
+%velocidad-vorticidad:
+%\begin{equation}
+%    \frac{\partial\vort}{\partial t} + (\vel\cdot\nabla)\vort =
+%    (\vort\cdot\nabla)\vel + \nu\Delta\vort,
+%\end{equation}
+%donde $\mathbf{u}$ es la velocidad
+%y $\vort = \nabla\times\mathbf{u}$ es la vorticidad.  La velocidad se obtiene
+%resolviendo la ecuación de Poisson: $\Delta\vel u = -\nabla\times\vort$
 
 
 
 
 
+
+\subsection{Propuesta de tesis}
 
 
 
@@ -227,6 +257,10 @@ y $\omega = \nabla\times\mathbf{u}$ es la vorticidad.
 \subsection{Objetivos Generales}
 
 \emph{(Su extensión no debe exceder el espacio disponible)}
+
+\begin{itemize}
+  \item 
+\end{itemize}
 
 \subsection{Objetivos Específicos}
 
@@ -267,12 +301,16 @@ etc.).}
 
 \emph{(Su extensión no debe exceder el espacio disponible) }
 
+Los recursos de hardware y software del Laboratorio de Métodos Cuantitativos
+serán suficientes para el desarrollo de este trabajo.
+
 \subsection{Recursos solicitados}
 
 \emph{Señale medios y recursos no disponibles en el Departamento de Informática
 de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
 laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
 
+No hay recursos por solicitar.
 
 
 
