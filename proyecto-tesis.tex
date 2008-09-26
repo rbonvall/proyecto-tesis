@@ -180,8 +180,7 @@ programación con streams incentiva aplicaciones con alta intensidad aritmética
 ~\cite[\S2.1]{brookgpu}.  Operaciones que son elementales en la CPU, como
 ejecución condicional y acceso directo a memoria, no permiten explotar el
 paralelismo y el ancho de banda de la GPU, e introducen penalizaciones de
-rendimiento gravísimas~\cite[\S{}V.C]{gpu-computing}
-
+rendimiento importantísimas~\cite[\S{}V.C]{gpu-computing}.
 
 \subsection{Programación científica de alto nivel y las GPUs}
 Tradicionalmente, la programación científica se caracteriza por sus
@@ -317,6 +316,14 @@ dado origen a los métodos híbridos partícula-malla, que además de evitar la
 distorsión de las partículas, permite integrar los métodos de partículas con
 algoritmos eficientes diseñados sobre grillas~\cite[\S3]{multiscale}.
 
+Otro aspecto importante en el que ha habido resultados importantes recientes es
+en las simulaciones de partículas con varios niveles de resolución.  Se ha
+propuesto esquemas que utilizan
+partículas con tamaños variables,
+mapeos adaptivos globales,
+refinamientos adaptivos de malla
+y análisis multiresolución usando wavelets~\cite{multiresolution}.
+
 La escasez de bibliotecas científicas relevantes y la dificultad de paralelizar
 eficientemente los métodos fueron problemas que impidieron la implementación
 eficiente de estos métodos.  Recientemente el ETH de Zúrich desarrolló una
@@ -359,19 +366,29 @@ se crean las abstracciones que serán utilizadas para crear programas.
 
 Esta tesis intenta explorar un acercamiento top-down, enfocado a un dominio de
 problema específico: cómo diseñar una biblioteca de alto nivel, en un lenguaje
-dinámico, cuyos componentes puedan correr en la GPU.
+de características dinámicas, cuyos componentes puedan correr en la GPU de
+manera transparente al programador.  La idea es que las abstracciones provistas
+por la interfaz estén en el dominio de los métodos de partículas.
+
+Como producto final se espera presentar una pequeña biblioteca que sirva de
+prueba de concepto para el desarrollo de aplicaciones aceleradas por GPU en un
+dominio particular, evaluando el impacto en performance y complejidad de
+programación de las decisiones de diseño tomadas.
+
+Con el fin de acotar el número de factores involucrados, el trabajo de tesis se
+enfocará en la implementación de métodos de vórtices en dos dimensiones.  Varios
+tipos de componentes pueden ser integrados en un método de este tipo; por
+ejemplo: diferentes condiciones de borde, diferentes modelos de difusión,
+distintos modelos de multiresolución, y diferentes métodos para evaluar la
+velocidad a partir de la vorticidad.
 
 
- 
- 
 
- 
-
+\newpage
 \section{Hipótesis de Trabajo}
 
 \emph{Formule las hipótesis de trabajo señalando claramente su conjetura.}
 \emph{(Su extensión no debe exceder el espacio disponible) }
- 
 
 \section{Objetivos }
 
@@ -399,11 +416,6 @@ dinámico, cuyos componentes puedan correr en la GPU.
 \subsection{Formas de Validación}
 
 \emph{(Su extensión no debe exceder el espacio disponible)}
-
- 
- 
- 
-
  
 
 \section{Recursos}
@@ -453,6 +465,11 @@ No hay recursos por solicitar.
     \reftitle{High-level GPU programming: Domain-specifi optimization and inference.}
     Tesis doctoral, Lund University, 2008.
 
+    \bibitem{multiresolution}
+    Michael Bergdorf, Petros Koumoutsakos.
+    \reftitle{Multiresolution Particle Methods}
+    Complex Effects in Large Eddy Simulations, 56~(2006) 49--61.
+
     \bibitem{multiscale}
     Petros Koumoutsakos.
     \reftitle{Multiscale Flow Simulations Using Particles.}
@@ -476,7 +493,7 @@ No hay recursos por solicitar.
 
     \bibitem{pycuda}
     Andreas Klöckner.
-    \reftitle{PyCUDA}
+    PyCUDA.
     \url{http://mathema.tician.de/software/pycuda}
 
 
