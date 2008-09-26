@@ -1,4 +1,4 @@
-% vim: set fileencoding=utf-8 encoding=utf-8:
+% vim: set fileencoding=utf-8 encoding=utf-8 textwidth=80:
 \documentclass[11pt,spanish]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
@@ -53,11 +53,30 @@
 \section*{Resumen}
 
 \emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
-objetivos,  resultados esperados y palabras claves. }
+objetivos, resultados esperados y palabras claves. }
+
+
+
+\paragraph{Palabras claves:}
+computación de alto desempeño,
+dinámica de fluídos computacional,
+métodos de partículas,
+métodos de vórtices,
+computación en GPUs,
+lenguajes de programación dinámicos.
+
 
 \section*{Abstract}
 
 \emph{Lo mismo, en inglés}
+
+\paragraph{Key words:}
+High Performance Computing,
+Computational Fluid Dynamics,
+Particle Methods,
+Vortex Methods,
+General Purpose GPU Programming,
+Dynamic Programming Languages.
 
 \newpage
 \section{Formulación General de la Problemática y Propuesta de Tesis}
@@ -69,15 +88,11 @@ referencias y, finalmente, su propuesta de tesis.}
     
 \emph{(La extensión máxima de esta sección es de hasta 5 páginas.  En hojas
 adicionales incluya la lista de referencias)}
- 
 
-Tesis: implementación de métodos de partículas con componentes
-implementados en la GPU, e integrados en un lenguaje de programación
-dinámico de alto nivel.
-
-El trabajo de tesis propuesto consiste en la implementación de métodos de
-partículas en un lenguaje de programación dinámico de alto nivel, implementando
-
+El trabajo de tesis propuesto consiste en el análisis, diseño e implementación
+de componentes para hacer simulaciones de fluídos con métodos de partículas,
+utilizando la GPU como recurso computacional, y ofreciendo una interfaz de alto
+nivel en un lenguaje de programación dinámico.
 
 \subsection{Computación de alto desempeño}
 
@@ -91,7 +106,6 @@ problemas más complejos, no es posible hacerlo en un tiempo razonable.
 La computación de alto desempeño (HPC) es la utilización de supercomputadores y
 clústers de computadores para resolver problemas computacionales complejos.  Los
 conceptos claves en HPC son:
-
 \begin{itemize}
    \item paralelismo:
      la capacidad de ejecutar instrucciones concurrentemente;
@@ -102,7 +116,6 @@ conceptos claves en HPC son:
      estándar y de bajo costo, con componentes de software off-the-shelf
      (interoperabilidad).
 \end{itemize}
-
 La tendencia actual en sistemas de HPC y en diseño de arquitecturas de hardware
 ya no apunta a mejorar el rendimiento de las unidades de cómputo por separado,
 sino a explotar el paralelismo para obtener mejoras en el desempeño final de un
@@ -116,41 +129,103 @@ originalmente para acelerar aplicaciones de computación gráfica (CG), que son
 intensivas en cómputo y requieren resultados en tiempo real.  Las
 características de una aplicación gráfica que pueden ser efectivamente
 paralelizadas, y que son explotadas por la GPU, son:
-
 \begin{itemize}
   \item stream processing:
     las operaciones visuales suelen ser independientes entre
     píxeles, y pueden ejecutarse concurrentemente;  destinando procesadores
     separados para cada operación es como las GPUs obtienen la mayor ganancia
-    en desempeño
-    \cite[\S3.2]{gpupp}
-
+    en desempeño~\cite[\S3.2]{gpupp};
   \item pipelining:
     las diferentes etapas de un algoritmo gráfico (p.ej.
     transformaciones espaciales, aplicación de texturas, rasterización)
     forman una estructura de tubería (pipeline), en que la salida de una etapa
     sirve de entrada a la siguiente;  las GPUs implementan este pipeline en
-    hardware, ofreciendo cierto control sobre sus etapas.
-    \cite[\S 3.1]{pygpu}
-
+    hardware, ofreciendo cierto control sobre sus etapas~\cite[\S3.1]{pygpu};
   \item vector processing:
     casi todas las cantidades involucradas en computación
     gráfica son vectores (colores, puntos, segmentos, direccionamiento en
     texturas); por ello, las instrucciones de la GPU operan sobre 4-vectores de
     números de coma flotante, en lugar de sobre cantidades escalares.
-    \cite[3.3]{gpupp}
+    \cite[\S3.3]{gpupp}
 \end{itemize}
 
 En la última década, las GPUs han evolucionado rápidamente en términos de
-capacidad computacional y de programabilidad.  La capacidad de cómputo ya supera
-por un orden de magnitud la de las CPUs, y 
+capacidad computacional y de programabilidad.  Su capacidad de cómputo ya supera
+por un orden de magnitud la de las CPUs~\cite{gpupp}.  Este poder computacional ha
+incentivado el uso de GPUs para computación de propósito general, al punto que
+ya se las considera una parte integral del repertorio de aplicaciones
+HPC~\cite{gpu-computing}.
 
-En la actualidad ya se considera a las GPUs una parte integral del repertorio
-de aplicaciones HPC.
-\cite{gpu-computing}
+A medida que las GPUs se hacían más programables, también evolucionaron las
+interfaces para programación.  Inicialmente, se programaban los procesadores de
+vértices y de fragmentos a nivel de lenguaje de ensamblado.  Después aparecieron
+lenguajes de más alto nivel como Cg, HLSL y GLslang, que sin embargo igual
+utilizaban llamadas explícitas a las APIs gráficas.  Debido a esto, la
+implementación de algoritmos de propósito general requería expresarlos en
+función de directivas gráficas~\cite[\S2.2]{brookgpu}.  Programar la GPU
+implicaba crear shaders, programas que pintan píxeles a partir de los
+vértices, fragmentos y texturas que le sirven de entrada.
+
+Las abstracciones gráficas (vértices, fragmentos, texturas, shaders)
+son análogas a un paradigma más general denominado \emph{stream processing},
+en que una serie de operaciones de cómputo (los kernels) son aplicados sobre
+cada elemento de un conjunto de datos de entrada (el stream).  Este modelo es
+incorporado en lenguajes para GPUs más recientes como Brook y CUDA.
+
+A pesar de ofrecer modelos de programación cada vez más flexibles, las GPUs
+siguen siendo un entorno de programación extremadamente limitado, y no cualquier
+algoritmo es apropiado para ser acelerado en la GPU.  En particular, la
+programación con streams incentiva aplicaciones con alta intensidad aritmética
+(tasa de operaciones por ancho de banda de memoria)
+~\cite[\S2.1]{brookgpu}.  Operaciones que son elementales en la CPU, como
+ejecución condicional y acceso directo a memoria, no permiten explotar el
+paralelismo y el ancho de banda de la GPU, e introducen penalizaciones de
+rendimiento gravísimas~\cite[\S{}V.C]{gpu-computing}
 
 
-\subsection{Programación científica de alto nivel con GPUs}
+\subsection{Programación científica de alto nivel y las GPUs}
+Tradicionalmente, la programación científica se caracteriza por sus
+exigentes requerimientos de performance.  Las bibliotecas científicas suelen
+estar implementadas en lenguajes compilados, típicamente C y Fortran, cuyos
+compiladores realizan optimizaciones agresivas que permiten obtener binarios
+extremadamente eficientes en términos de tiempo de ejecución, aprovechando al
+máximo la arquitectura del computador.
+
+Por otra parte, existen los lenguajes de programación dinámicos (p.ej.~Lisp,
+Python, Ruby, Scheme) que están diseñados para aumentar la eficiencia
+del programador.  Permiten ciclos de desarrollo más rápido, presentan
+abstracciones más cercanas al programador que a la máquina, y ofrecen
+facilidades de mateprogramación~\cite[\S2]{pygpu}.  Como consecuencia, los
+programas suelen ser más fáciles de implementar, de mantener y de reutilizar, y
+se adaptan mejor al esquema de trabajo de un programador científico, típicamente
+orientado a refinar prototipos en varias iteraciones.
+
+El precio del dinamismo es una altísima penalización en rendimiento.  Por esto,
+los entornos de programación científicos dinámicos están diseñados para servir
+de pegamento entre bibliotecas binarias altamente optimizadas.  Este esquema es
+utilizado exitosamente, por ejemplo, por el lenguaje Matlab y por la biblioteca
+Numpy en el lenguaje Python, lo que permite desarrollar aplicaciones científicas
+completas de rendimiento aceptable sin necesidad de escribir código en un
+lenguaje compilado.
+
+Muy recientemente han aparecido sistemas para integrar la programación de GPUs
+de manera transparente en lenguajes de alto nivel.
+
+GPU++~\cite{gpupp} (2007) es un sistema de desarrollo integrado con C++ que
+permite implementar y utilizar kernels abstrayendo tanto la GPU como la CPU.
+Introduce varias técnicas de optimización, y administra en lugar del programador
+la ejecución de código y el copiado de datos entre el procesador y la tarjeta
+gráfica.
+
+PyGPU++~\cite{pygpu} (2008) es una biblioteca para escribir funciones para la
+GPU en Python. Utiliza las capacidades introspectivas del lenguaje,
+introduciendo un decorador que examina el bytecode de la función y anotaciones
+adicionales, y compila el código para la GPU.
+
+PyCUDA~\cite{pycuda} (2008) es una biblioteca que permite acceder directamente a
+la API de CUDA desde Python, ofreciendo además varias conveniencias adicionales,
+como una estructura de datos para representar matrices y vectores, cuyas
+operaciones son ejecutadas transparentemente en la GPU.
 
 
 \subsection{Dinámica de fluídos computacional}
@@ -195,17 +270,17 @@ tanto más poder computacional.
 
 \subsection{Métodos de partículas}
 La mayoría de los métodos de CFD discretizan el dominio del problema utilizando
-algún tipo de malla.  Los métodos de partículas (PM), en cambio, son una clase
+algún tipo de malla.  Los métodos de partículas, en cambio, son una clase
 de métodos que utilizan partículas discretas que arrastran distribuciones
 localizadas de variables de estado por el fluído.  Las propiedades físicas del
-fluído pueden ser recuperadas como combinaciones lineales de las distribuciones
+fluído pueden ser recuperadas como una superposición de las distribuciones
 de todas las partículas.
 
-Los PMs están basados en la forma lagrangiana de las ecuaciones subyacentes.
-La forma lagrangiana utiliza como marco de referencia las trayectorias de las
-partículas en el tiempo, y en ella no aparece el término de aceleración
-convectiva.  Las ecuaciones pasan a ser un sistema de ecuaciones diferenciales
-ordinarias:
+Los métodos de partículas están basados en la forma lagrangiana de las
+ecuaciones subyacentes.  La forma lagrangiana utiliza como marco de referencia
+las trayectorias de las partículas en el tiempo, y en ella no aparece el término
+de aceleración convectiva.  Las ecuaciones pasan a ser un sistema de ecuaciones
+diferenciales ordinarias:
 \begin{align}
     \frac{d\pos_p}{dt} &= \vel_p(\pos_p, t) =
         \sum_{p'} \mathbf{K}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'}) \\
@@ -215,11 +290,54 @@ ordinarias:
 donde $\xi$ es alguna propiedad del fluído, y $\mathbf{K}$ y $\mathbf{F}$ 
 representan la dinámica del sistema físico simulado.
 
-Un tipo importante de métodos de partículas son los métodos de vórtices (VM),
+Una clase importante de métodos de partículas son los métodos de vórtices (VM),
 que han sido utilizados desde la década de 1930 para describir la evolución de
-estructuras vorticales en fluídos incompresibles~\cite{multiscale}.
-En los últimos años se ha demostrado resultados importantes acerca de la
-convergencia y 
+estructuras vorticales en flujos incompresibles~\cite[\S2.2]{multiscale}.  Los
+VMs describen la evolución de la vorticidad $\vort = \nabla\times\vel$ del
+fluído.  En cada iteración, es necesario recuperar la velocidad a partir de la
+vorticidad para avanzar las partículas, y este paso es el más costoso en
+términos computacionales.  Por otra parte, en muchos fluídos la vorticidad es
+no nula sólo en una región reducida del dominio, lo que permite reducir el
+número de partículas necesarias para la simulación.
+
+Los métodos de vórtices han sido utilizados en aplicaciones de ingeniería,
+sus resultados tienen buena concordancia con los experimentos, y se ha postulado
+que su utilización introduce un modelo de turbulencia implícito.
+
+Los métodos de partículas no fueron muy utilizados en la simulación de sistemas
+continuos debido a dificultades numéricas y de implementación.  Trabajos
+teóricos recientes han abordado exitosamente los problemas numéricos, y han
+demostrado las ventajas de estos métodos:  adaptividad, capacidad de
+multiresolución, estabilidad de la discretización y un nexo inherente entre
+la simulación y la física representada~\cite{ppm}.
+
+Un resultado teórico importante es la necesidad de reubicar periódicamente
+las partículas sobre una malla regular para asegurar la convergencia.  Esto ha
+dado origen a los métodos híbridos partícula-malla, que además de evitar la
+distorsión de las partículas, permite integrar los métodos de partículas con
+algoritmos eficientes diseñados sobre grillas~\cite[\S3]{multiscale}.
+
+La escasez de bibliotecas científicas relevantes y la dificultad de paralelizar
+eficientemente los métodos fueron problemas que impidieron la implementación
+eficiente de estos métodos.  Recientemente el ETH de Zúrich desarrolló una
+biblioteca paralela para métodos partícula-malla que facilita implementarlos
+eficientemente sobre arquitecturas paralelas~\cite{ppm}.
+
+También ha habido trabajos recientes con simulaciones de fluídos usando partículas
+en GPUs, principalmente en el área de computación gráfica.  Los métodos usados
+para visualización buscan conseguir realismo visual, y no resuelven con
+exactitud las ecuaciones que discretizan.  Una implementación de un método de
+vórtices publicada en julio de 2008 asegura ser la primera simulación de fluídos
+exacta usando partículas en la GPU~\cite{vortex-gpu}.  Esta implementación está
+descrita en función de directivas gráficas, mapeando las partículas a texturas,
+en las que cada canal de color representa las propiedades de las partículas, y
+expresando los pasos del algoritmo como shaders del pipeline gráfico.
+
+%Un tipo importante de métodos de partículas son los métodos de vórtices (VM),
+%que han sido utilizados desde la década de 1930 para describir la evolución de
+%estructuras vorticales en fluídos incompresibles~\cite{multiscale}.
+%En los últimos años se ha demostrado resultados importantes acerca de la
+%convergencia y 
 
 %Los VMs resuelven la ecuación de Navier-Stokes en su formulación
 %velocidad-vorticidad:
@@ -232,12 +350,16 @@ convergencia y
 %resolviendo la ecuación de Poisson: $\Delta\vel u = -\nabla\times\vort$
 
 
-
-
-
-
 \subsection{Propuesta de tesis}
+La tendencia en los entornos de programación de GPUs es a ofrecer interfaces
+cada vez más genéricas, de modo de poder ser utilizadas para escribir programas
+de propósito general.  Esto puede ser descrito como un acercamiento bottom-up
+al desarrollo de software de alto desempeño:  partiendo del hardware gráfico,
+se crean las abstracciones que serán utilizadas para crear programas.
 
+Esta tesis intenta explorar un acercamiento top-down, enfocado a un dominio de
+problema específico: cómo diseñar una biblioteca de alto nivel, en un lenguaje
+dinámico, cuyos componentes puedan correr en la GPU.
 
 
  
@@ -250,7 +372,6 @@ convergencia y
 \emph{Formule las hipótesis de trabajo señalando claramente su conjetura.}
 \emph{(Su extensión no debe exceder el espacio disponible) }
  
- 
 
 \section{Objetivos }
 
@@ -258,16 +379,10 @@ convergencia y
 
 \emph{(Su extensión no debe exceder el espacio disponible)}
 
-\begin{itemize}
-  \item 
-\end{itemize}
-
 \subsection{Objetivos Específicos}
 
 \emph{(Su extensión no debe exceder el espacio disponible) }
        
-
- 
 
 \section{Metodología y Plan de Trabajo}
 
@@ -358,6 +473,12 @@ No hay recursos por solicitar.
     Ian Buck et~al.
     \reftitle{Brook for GPUs: Stream Computing on Graphics Hardware.}
     Stanford University.
+
+    \bibitem{pycuda}
+    Andreas Klöckner.
+    \reftitle{PyCUDA}
+    \url{http://mathema.tician.de/software/pycuda}
+
 
 \end{thebibliography}
 
