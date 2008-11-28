@@ -30,12 +30,12 @@
 \thispagestyle{empty}
 \begin{enumerate}
     \item \textbf{Título del Proyecto de Tesis:}
- 
+        \emph{GPU-accelerated particle-based fluid simulations in a dynamic
+        programming language}.
     \item \textbf{Nombre del Alumno:}
         Roberto Javier Bonvallet Carrasco
     \item \textbf{Número de Teléfono:}
         no tiene
-         
     \item \textbf{E-mail:}
         \texttt{rbonvall@inf.utfsm.cl}
     \item \textbf{Fecha de ingreso al programa:}
@@ -45,9 +45,16 @@
     \item \textbf{Profesor guía de tesis:}
         Luis Salinas Carrasco
     \item \textbf{Fecha presentación tema de tesis:}
+        Martes 9 de diciembre de 2008
     \item \textbf{Fecha aprobación tema de tesis:}
     \item \textbf{Fecha tentativa de término:}
+        Junio de 2009
     \item \textbf{Comisión interna de graduación:}
+        \begin{itemize}
+            \item Profe$_1$
+            \item Profe$_2$
+            \item Profe$_3$
+        \end{itemize}
 \end{enumerate}
 
 \newpage
@@ -71,7 +78,7 @@ lenguajes de programación dinámicos.
 
 \emph{Lo mismo, en inglés}
 
-\paragraph{Key words:}
+\paragraph{Keywords:}
 High Performance Computing,
 Computational Fluid Dynamics,
 Particle Methods,
@@ -141,7 +148,8 @@ paralelizadas, y que son explotadas por la GPU, son:
     transformaciones espaciales, aplicación de texturas, rasterización)
     forman una estructura de tubería (pipeline), en que la salida de una etapa
     sirve de entrada a la siguiente;  las GPUs implementan este pipeline en
-    hardware, ofreciendo cierto control sobre sus etapas~\cite[\S3.1]{pygpu};
+    hardware, ofreciendo cierto grado de programabilidad sobre sus
+    etapas~\cite[\S3.1]{pygpu};
   \item vector processing:
     casi todas las cantidades involucradas en computación
     gráfica son vectores (colores, puntos, segmentos, direccionamiento en
@@ -154,8 +162,12 @@ En la última década, las GPUs han evolucionado rápidamente en términos de
 capacidad computacional y de programabilidad.  Su capacidad de cómputo ya supera
 por un orden de magnitud la de las CPUs~\cite{gpupp}.  Este poder computacional ha
 incentivado el uso de GPUs para computación de propósito general, al punto que
-ya se las considera una parte integral del repertorio de aplicaciones
+ya han pasado a ser parte integral del repertorio de aplicaciones
 HPC~\cite{gpu-computing}.
+Un hito importante en esta tendencia fue la aparición, en noviembre de 2008, del
+primer clúster basado en GPUs en la lista Top500, un ránking semestral de los
+500 supercomputadores más poderosos del mundo~\cite{top500}.
+
 
 A medida que las GPUs se hacían más programables, también evolucionaron las
 interfaces para programación.  Inicialmente, se programaban los procesadores de
@@ -491,6 +503,9 @@ No hay recursos por solicitar.
     Ian Buck et~al.
     \reftitle{Brook for GPUs: Stream Computing on Graphics Hardware.}
     Stanford University.
+
+    \bibitem{top500}
+    \reftitle{Top500.}
 
     \bibitem{pycuda}
     Andreas Klöckner.
