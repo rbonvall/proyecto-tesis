@@ -5,7 +5,9 @@ dvi: $(DOC).dvi
 
 %.dvi: %.tex
 	latex $<
+	latex $<
 %.pdf: %.tex
+	pdflatex $<
 	pdflatex $<
 
 clean:
