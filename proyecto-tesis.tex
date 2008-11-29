@@ -4,14 +4,11 @@
 \usepackage{babel}
 \usepackage{fullpage}
 \usepackage{url}
-\usepackage{times}
 \usepackage{mathptmx}
-%\usepackage{mathrsfs} 
 \usepackage{amsmath} 
+%\usepackage{mathrsfs} 
 %\usepackage{amssymb} 
 %\usepackage{amsbsy} 
-%\usepackage{cancel}
-%\usepackage[dvips]{graphicx} 
 
 \newcommand{\reftitle}{\textit}
 \newcommand{\vel}{\mathbf{u}}
@@ -22,69 +19,43 @@
     Magíster en Ciencias de la Ingeniería Informática \\
     \textsc{Borrador \#2}
 }
-\author{Roberto Bonvallet}
-\date{Noviembre de 2008}
+\date{}
+%\author{Roberto Bonvallet}
+%\date{Noviembre de 2008}
 
 \begin{document}
 \maketitle
 \thispagestyle{empty}
 \Large
+\begin{center}
 \begin{tabular}{|rp{0.3\textwidth}|p{0.6\textwidth}|}\hline
-     1.& \textbf{Título del Proyecto de Tesis} &
-         \emph{GPU-accelerated particle-based fluid simulations in a dynamic programming language}. \\\hline
-     2.& \textbf{Nombre del Alumno} &
-         Roberto Javier Bonvallet Carrasco \\\hline
-     3.& \textbf{Número de Teléfono} &
-         no tiene \\\hline
-     4.& \textbf{E-mail} &
-         \texttt{rbonvall@inf.utfsm.cl} \\\hline
-     5.& \textbf{Fecha de ingreso al programa} &
-         Primer semestre de 2006 \\\hline
-     6.& \textbf{Pregrado} &
-         Licenciatura en Ingeniería Informática, UTFSM, 2006 \\\hline
-     7.& \textbf{Profesor guía de tesis} &
-         Luis Salinas Carrasco \\\hline
-     8.& \textbf{Fecha presentación tema de tesis} &
-         Martes 9 de diciembre de 2008 \\\hline
-     9.& \textbf{Fecha aprobación tema de tesis} &
+     1.& \textbf{\mbox{Título del Proyecto}
+                 \mbox{de Tesis}}        & \emph{GPU-accelerated
+                                           particle-based
+                                           fluid simulations
+                                           in a dynamic programming language}. \\\hline
+     2.& \textbf{Nombre del Alumno}      & Roberto Javier Bonvallet Carrasco \\\hline
+     3.& \textbf{Número de Teléfono}     & no tiene \\\hline
+     4.& \textbf{E-mail}                 & \texttt{rbonvall@inf.utfsm.cl} \\\hline
+     5.& \textbf{\mbox{Fecha de ingreso}
+                 \mbox{al programa}}     & Primer semestre de 2006 \\\hline
+     6.& \textbf{Pregrado}               & \mbox{Licenciatura en Ingeniería Informática},
+                                           \mbox{UTFSM, 2006} \\\hline
+     7.& \textbf{Profesor guía de tesis} & Luis Salinas Carrasco \\\hline
+     8.& \textbf{\mbox{Fecha presentación}
+                 \mbox{tema de tesis}}   & Martes 9 de diciembre de 2008 \\\hline
+     9.& \textbf{\mbox{Fecha aprobación}
+                 \mbox{tema de tesis}}   & \\\hline
+    10.& \textbf{\mbox{Fecha tentativa}
+                 \mbox{de término}}      & Junio de 2009 \\\hline
+    11.& \textbf{\mbox{Comisión interna}
+                 \mbox{de graduación}}   & profe$_1$,
+                                           profe$_2$,
+                                           profe$_3$.
          \\\hline
-    10.& \textbf{Fecha tentativa de término} &
-         Junio de 2009 \\\hline
-    11.& \textbf{Comisión interna de graduación} & 
-         Profe$_1$ \\
-      && Profe$_2$ \\
-      && Profe$_3$ \\\hline
 \end{tabular}
+\end{center}
 \normalsize
-
-\begin{enumerate}
-    \item \textbf{Título del Proyecto de Tesis:}
-        \emph{GPU-accelerated particle-based fluid simulations in a dynamic
-        programming language}.
-    \item \textbf{Nombre del Alumno:}
-        Roberto Javier Bonvallet Carrasco
-    \item \textbf{Número de Teléfono:}
-        no tiene
-    \item \textbf{E-mail:}
-        \texttt{rbonvall@inf.utfsm.cl}
-    \item \textbf{Fecha de ingreso al programa:}
-        Primer semestre de 2006
-    \item \textbf{Pregrado:}
-        Licenciatura en Ingeniería Informática, UTFSM, 2006
-    \item \textbf{Profesor guía de tesis:}
-        Luis Salinas Carrasco
-    \item \textbf{Fecha presentación tema de tesis:}
-        Martes 9 de diciembre de 2008
-    \item \textbf{Fecha aprobación tema de tesis:}
-    \item \textbf{Fecha tentativa de término:}
-        Junio de 2009
-    \item \textbf{Comisión interna de graduación:}
-        \begin{itemize}
-            \item Profe$_1$
-            \item Profe$_2$
-            \item Profe$_3$
-        \end{itemize}
-\end{enumerate}
 
 \newpage
 \section*{Resumen}
@@ -135,14 +106,14 @@ nivel en un lenguaje de programación dinámico.
 
 \subsection{Computación de alto desempeño}
 
-Desde los inicios de la computación, ha existido una demanda creciente de poder
+A lo largo de la computación, ha existido una demanda creciente de poder
 computacional en las áreas de la ciencia y la ingeniería.  A medida que ha
 aumentado la capacidad de cómputo disponible, también han crecido el tamaño y la
 complejidad de los problemas que se necesita resolver, y en el caso de los
 problemas más complejos, no es posible hacerlo en un tiempo razonable.
 \cite{parallel-programming}
 
-La computación de alto desempeño (HPC) es la utilización de supercomputadores y
+La computación de alto desempeño~(HPC) es la utilización de supercomputadores y
 clústers de computadores para resolver problemas computacionales complejos.  Los
 conceptos claves en HPC son:
 \begin{itemize}
@@ -170,10 +141,11 @@ características de una aplicación gráfica que pueden ser efectivamente
 paralelizadas, y que son explotadas por la GPU, son:
 \begin{itemize}
   \item stream processing:
-    las operaciones visuales suelen ser independientes entre
-    píxeles, y pueden ejecutarse concurrentemente;  destinando procesadores
-    separados para cada operación es como las GPUs obtienen la mayor ganancia
-    en desempeño~\cite[\S3.2]{gpupp};
+    las operaciones visuales suelen ser completamente independientes entre
+    píxeles, y pueden ejecutarse concurrentemente;  las GPUs obtienen su mayor
+    ganancia en desempeño destinando muchos procesadores
+    separados para aplicar una operación sobre un gran arreglo de
+    datos~\cite[\S3.2]{gpupp};
   \item pipelining:
     las diferentes etapas de un algoritmo gráfico (p.ej.
     transformaciones espaciales, aplicación de texturas, rasterización)
@@ -199,16 +171,16 @@ Un hito importante en esta tendencia fue la aparición, en noviembre de 2008, de
 primer clúster basado en GPUs en la lista Top500, un ránking semestral de los
 500 supercomputadores más poderosos del mundo~\cite{top500}.
 
-
 A medida que las GPUs se hacían más programables, también evolucionaron las
-interfaces para programación.  Inicialmente, se programaban los procesadores de
-vértices y de fragmentos a nivel de lenguaje de ensamblado.  Después aparecieron
-lenguajes de más alto nivel como Cg, HLSL y GLslang, que sin embargo igual
-utilizaban llamadas explícitas a las APIs gráficas.  Debido a esto, la
-implementación de algoritmos de propósito general requería expresarlos en
-función de directivas gráficas~\cite[\S2.2]{brookgpu}.  Programar la GPU
-implicaba crear shaders, programas que pintan píxeles a partir de los
-vértices, fragmentos y texturas que le sirven de entrada.
+interfaces para programación.  Inicialmente, los procesadores de
+vértices y de fragmentos debían ser programados a nivel de lenguaje de
+ensamblado.
+Después aparecieron lenguajes de más alto nivel como Cg, HLSL y GLslang,
+que sin embargo aún utilizaban llamadas explícitas a las APIs gráficas.
+Debido a esto, la implementación de algoritmos de propósito general
+requería expresarlos en función de directivas gráficas~\cite[\S2.2]{brookgpu}.
+Programar la GPU implicaba crear shaders, programas que pintan píxeles a partir
+de los vértices, fragmentos y texturas que le sirven de entrada.
 
 Las abstracciones gráficas (vértices, fragmentos, texturas, shaders)
 son análogas a un paradigma más general denominado \emph{stream processing},
@@ -216,12 +188,13 @@ en que una serie de operaciones de cómputo (los kernels) son aplicados sobre
 cada elemento de un conjunto de datos de entrada (el stream).  Este modelo es
 incorporado en lenguajes para GPUs más recientes como Brook y CUDA.
 
-A pesar de ofrecer modelos de programación cada vez más flexibles, las GPUs
-siguen siendo un entorno de programación extremadamente limitado, y no cualquier
-algoritmo es apropiado para ser acelerado en la GPU.  En particular, la
-programación con streams incentiva aplicaciones con alta intensidad aritmética
-(tasa de operaciones por ancho de banda de memoria)
-~\cite[\S2.1]{brookgpu}.  Operaciones que son elementales en la CPU, como
+A pesar de ofrecer modelos de programación cada vez más flexibles,
+las GPUs siguen siendo un entorno de programación extremadamente limitado,
+y no cualquier algoritmo es apropiado para ser acelerado en la GPU.
+En particular, la programación usando streams
+incentiva aplicaciones con alta intensidad aritmética
+(tasa de operaciones por ancho de banda de memoria)~\cite[\S2.1]{brookgpu}.
+Operaciones que son elementales en la CPU, como
 ejecución condicional y acceso directo a memoria, no permiten explotar el
 paralelismo y el ancho de banda de la GPU, e introducen penalizaciones de
 rendimiento importantísimas~\cite[\S{}V.C]{gpu-computing}.
@@ -239,9 +212,9 @@ Python, Ruby, Scheme) que están diseñados para aumentar la eficiencia
 del programador.  Permiten ciclos de desarrollo más rápido, presentan
 abstracciones más cercanas al programador que a la máquina, y ofrecen
 facilidades de mateprogramación~\cite[\S2]{pygpu}.  Como consecuencia, los
-programas suelen ser más fáciles de implementar, de mantener y de reutilizar, y
-se adaptan mejor al esquema de trabajo de un programador científico, típicamente
-orientado a refinar prototipos en varias iteraciones.
+programas suelen ser más fáciles de implementar, de mantener y de reutilizar,
+y se adaptan mejor al esquema de trabajo de un programador científico,
+típicamente orientado a refinar prototipos en varias iteraciones.
 
 El precio del dinamismo es una altísima penalización en rendimiento.  Por esto,
 los entornos de programación científicos dinámicos están diseñados para servir
@@ -319,7 +292,7 @@ localizadas de variables de estado por el fluído.  Las propiedades físicas del
 fluído pueden ser recuperadas como una superposición de las distribuciones
 de todas las partículas.
 
-Los métodos de partículas están basados en la forma lagrangiana de las
+Las métodos de partículas están basados en la forma lagrangiana de las
 ecuaciones subyacentes.  La forma lagrangiana utiliza como marco de referencia
 las trayectorias de las partículas en el tiempo, y en ella no aparece el término
 de aceleración convectiva.  Las ecuaciones pasan a ser un sistema de ecuaciones
@@ -361,8 +334,8 @@ distorsión de las partículas, permite integrar los métodos de partículas con
 algoritmos eficientes diseñados sobre grillas~\cite[\S3]{multiscale}.
 
 Otro aspecto importante en el que ha habido resultados importantes recientes es
-en las simulaciones de partículas con varios niveles de resolución.  Se ha
-propuesto esquemas que utilizan
+en las simulaciones de partículas con varios niveles de resolución.
+Se ha propuesto esquemas que utilizan
 partículas con tamaños variables,
 mapeos adaptivos globales,
 refinamientos adaptivos de malla
@@ -372,7 +345,7 @@ La escasez de bibliotecas científicas relevantes y la dificultad de paralelizar
 eficientemente los métodos fueron problemas que impidieron la implementación
 eficiente de estos métodos.  Recientemente el ETH de Zúrich desarrolló una
 biblioteca paralela para métodos partícula-malla que facilita implementarlos
-eficientemente sobre arquitecturas paralelas~\cite{ppm}.
+eficientemente sobre arquitecturas paralelas de gran escala~\cite{ppm}.
 
 También ha habido trabajos recientes con simulaciones de fluídos usando partículas
 en GPUs, principalmente en el área de computación gráfica.  Los métodos usados
@@ -383,12 +356,6 @@ exacta usando partículas en la GPU~\cite{vortex-gpu}.  Esta implementación est
 descrita en función de directivas gráficas, mapeando las partículas a texturas,
 en las que cada canal de color representa las propiedades de las partículas, y
 expresando los pasos del algoritmo como shaders del pipeline gráfico.
-
-%Un tipo importante de métodos de partículas son los métodos de vórtices (VM),
-%que han sido utilizados desde la década de 1930 para describir la evolución de
-%estructuras vorticales en fluídos incompresibles~\cite{multiscale}.
-%En los últimos años se ha demostrado resultados importantes acerca de la
-%convergencia y 
 
 %Los VMs resuelven la ecuación de Navier-Stokes en su formulación
 %velocidad-vorticidad:
@@ -401,7 +368,10 @@ expresando los pasos del algoritmo como shaders del pipeline gráfico.
 %resolviendo la ecuación de Poisson: $\Delta\vel u = -\nabla\times\vort$
 
 
-\subsection{Propuesta de tesis}
+\subsection{Objetivo del proyecto}
+
+
+
 La tendencia en los entornos de programación de GPUs es a ofrecer interfaces
 cada vez más genéricas, de modo de poder ser utilizadas para escribir programas
 de propósito general.  Esto puede ser descrito como un acercamiento bottom-up
@@ -430,23 +400,33 @@ velocidad a partir de la vorticidad.
 
 \newpage
 \section{Hipótesis de Trabajo}
-
-\emph{Formule las hipótesis de trabajo señalando claramente su conjetura.}
-\emph{(Su extensión no debe exceder el espacio disponible) }
+\begin{enumerate}
+    \item Implementación
+    \item Aceleración con GPUs
+    \item La implementación de los distintos componentes de la simulación
+        abstraerá completamente los detalles de la GPU, 
+\end{enumerate}
 
 \section{Objetivos }
 
 \subsection{Objetivos Generales}
-
 \emph{(Su extensión no debe exceder el espacio disponible)}
 
-\subsection{Objetivos Específicos}
+\begin{enumerate}
+    \item
+\end{enumerate}
 
+\subsection{Objetivos Específicos}
 \emph{(Su extensión no debe exceder el espacio disponible) }
-       
+
+\begin{enumerate}
+   \item Evaluar mecanismos de comunicación entre un lenguaje de programación
+       dinámico y hardware gráfico, en términos de rendimiento computacional y
+       conveniencia para el desarrollador.
+   \item Diseñar e implementar simulaciones
+\end{enumerate}
 
 \section{Metodología y Plan de Trabajo}
-
 \emph{(Su extensión no debe exceder el espacio disponible)}
 
  
@@ -454,12 +434,23 @@ velocidad a partir de la vorticidad.
 
 \subsection{Aportes y Resultados Esperados}
 
-\emph{(Su extensión no debe exceder el espacio disponible)}
+\begin{enumerate}
+    \item Bibloteca
+    \item Ganancia de performance
+    \item Metodología
+    \item 
+\end{enumerate}
  
 
 \subsection{Formas de Validación}
 
 \emph{(Su extensión no debe exceder el espacio disponible)}
+
+\begin{enumerate}
+    \item
+    \item
+    \item
+\end{enumerate}
  
 
 \section{Recursos}
@@ -470,10 +461,8 @@ velocidad a partir de la vorticidad.
 la UTFSM, para realizar el proyecto de tesis (libros, software, laboratorios,
 etc.).}
 
-\emph{(Su extensión no debe exceder el espacio disponible) }
-
 Los recursos de hardware y software del Laboratorio de Métodos Cuantitativos
-serán suficientes para el desarrollo de este trabajo.
+están a disposición para el desarrollo de este proyecto.
 
 \subsection{Recursos solicitados}
 
@@ -481,7 +470,7 @@ serán suficientes para el desarrollo de este trabajo.
 de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
 laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
 
-No hay recursos por solicitar.
+XXX
 
 
 
@@ -492,7 +481,7 @@ No hay recursos por solicitar.
     Proceedings of the IEEE, May 2008.
 
     \bibitem{parallel-programming}
-    Barru Wilkinson, Michael Allen.
+    Barry Wilkinson, Michael Allen.
     \reftitle{Parallel Programming.}
 
     \bibitem{hpc-gpu-cuda-slides}
@@ -536,7 +525,8 @@ No hay recursos por solicitar.
     Stanford University.
 
     \bibitem{top500}
-    \reftitle{Top500.}
+    \reftitle{Top500 Supercomputing Sites.}
+    \url{http://www.top500.org}
 
     \bibitem{pycuda}
     Andreas Klöckner.
