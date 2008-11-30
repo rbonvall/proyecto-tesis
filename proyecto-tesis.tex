@@ -6,6 +6,7 @@
 \usepackage{url}
 \usepackage{mathptmx}
 \usepackage{amsmath} 
+\usepackage{array}
 %\usepackage{mathrsfs} 
 %\usepackage{amssymb} 
 %\usepackage{amsbsy} 
@@ -14,45 +15,37 @@
 \newcommand{\vel}{\mathbf{u}}
 \newcommand{\vort}{\mathbf{\omega}}
 \newcommand{\pos}{\mathbf{x}}
+\newcommand{\tnhl}{\tabularnewline\hline}
 
 \title{Proyecto de Tesis \\
     Magíster en Ciencias de la Ingeniería Informática \\
     \textsc{Borrador \#2}
 }
 \date{}
-%\author{Roberto Bonvallet}
-%\date{Noviembre de 2008}
+\author{Roberto Bonvallet}
+\date{Noviembre de 2008}
 
 \begin{document}
 \maketitle
 \thispagestyle{empty}
 \Large
 \begin{center}
-\begin{tabular}{|rp{0.3\textwidth}|p{0.6\textwidth}|}\hline
-     1.& \textbf{\mbox{Título del Proyecto}
-                 \mbox{de Tesis}}        & \emph{GPU-accelerated
-                                           particle-based
-                                           fluid simulations
-                                           in a dynamic programming language}. \\\hline
-     2.& \textbf{Nombre del Alumno}      & Roberto Javier Bonvallet Carrasco \\\hline
-     3.& \textbf{Número de Teléfono}     & no tiene \\\hline
-     4.& \textbf{E-mail}                 & \texttt{rbonvall@inf.utfsm.cl} \\\hline
-     5.& \textbf{\mbox{Fecha de ingreso}
-                 \mbox{al programa}}     & Primer semestre de 2006 \\\hline
-     6.& \textbf{Pregrado}               & \mbox{Licenciatura en Ingeniería Informática},
-                                           \mbox{UTFSM, 2006} \\\hline
-     7.& \textbf{Profesor guía de tesis} & Luis Salinas Carrasco \\\hline
-     8.& \textbf{\mbox{Fecha presentación}
-                 \mbox{tema de tesis}}   & Martes 9 de diciembre de 2008 \\\hline
-     9.& \textbf{\mbox{Fecha aprobación}
-                 \mbox{tema de tesis}}   & \\\hline
-    10.& \textbf{\mbox{Fecha tentativa}
-                 \mbox{de término}}      & Junio de 2009 \\\hline
-    11.& \textbf{\mbox{Comisión interna}
-                 \mbox{de graduación}}   & profe$_1$,
-                                           profe$_2$,
-                                           profe$_3$.
-         \\\hline
+\begin{tabular}{|%
+    r <{.} @{ } %
+    >{\bfseries\raggedright\hspace{0pt}} p{0.26\textwidth} |%
+    >{\raggedright\hspace{0pt}}          p{0.5\textwidth} <{} |%
+}\hline
+   1 & Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations in a dynamic programming language}. \tnhl
+   2 & Nombre del alumno            & Roberto Javier Bonvallet Carrasco \tnhl
+   3 & Número de teléfono           & no tiene \tnhl
+   4 & Correo electrónico           & \texttt{rbonvall@inf.utfsm.cl} \tnhl
+   5 & Fecha de ingreso al programa & Primer semestre de 2006 \tnhl
+   6 & Pregrado                     & Licenciatura en Ingeniería Informática, UTFSM, 2006\tnhl
+   7 & Profesor guía de tesis       & Luis Salinas Carrasco \tnhl
+   8 & Fecha presentación tema de tesis & Martes 9 de diciembre de 2008 \tnhl
+   9 & Fecha aprobación tema de tesis   & \tnhl
+  10 & Fecha tentativa de término       & Junio de 2009 \tnhl
+  11 & Comisión interna de graduación   & profe$_1$, \\ profe$_2$, \\ profe$_3$.  \tnhl
 \end{tabular}
 \end{center}
 \normalsize
