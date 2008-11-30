@@ -26,13 +26,14 @@
 \date{Noviembre de 2008}
 
 \begin{document}
+%\fontfamily{phv} % Helvetica
 \maketitle
 \thispagestyle{empty}
 \Large
 \begin{center}
 \begin{tabular}{|%
     r <{.} @{ } %
-    >{\bfseries\raggedright\hspace{0pt}} p{0.26\textwidth} |%
+    >{\bfseries\raggedright\hspace{0pt}} p{0.27\textwidth} |%
     >{\raggedright\hspace{0pt}}          p{0.5\textwidth} <{} |%
 }\hline
    1 & Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations in a dynamic programming language}. \tnhl
@@ -56,10 +57,6 @@
 \emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
 objetivos, resultados esperados y palabras claves. }
 
-
-
-
-
 \paragraph{Palabras claves:}
 computación de alto desempeño,
 dinámica de fluídos computacional,
@@ -69,6 +66,7 @@ computación en GPUs,
 lenguajes de programación dinámicos.
 
 
+\newpage
 \section*{Abstract}
 
 \emph{Lo mismo, en inglés}
@@ -84,16 +82,16 @@ Dynamic Programming Languages.
 \newpage
 \section{Formulación General de la Problemática y Propuesta de Tesis}
 
-\emph{Debe contener la exposición general del problema, identificando claramente qué
-aspectos relacionados con la informática son los más relevantes.  Además,
-deberá contener el marco teórico, la discusión bibliográfica con sus
-referencias y, finalmente, su propuesta de tesis.}
-    
-\emph{(La extensión máxima de esta sección es de hasta 5 páginas.  En hojas
-adicionales incluya la lista de referencias)}
+%\emph{Debe contener la exposición general del problema, identificando claramente qué
+%aspectos relacionados con la informática son los más relevantes.  Además,
+%deberá contener el marco teórico, la discusión bibliográfica con sus
+%referencias y, finalmente, su propuesta de tesis.}
+%    
+%\emph{(La extensión máxima de esta sección es de hasta 5 páginas.  En hojas
+%adicionales incluya la lista de referencias)}
 
 El trabajo de tesis propuesto consiste en el análisis, diseño e implementación
-de componentes para hacer simulaciones de fluídos con métodos de partículas,
+de componentes para hacer simulaciones de dinámica de fluídos basadas en partículas,
 utilizando la GPU como recurso computacional, y ofreciendo una interfaz de alto
 nivel en un lenguaje de programación dinámico.
 
@@ -193,7 +191,7 @@ paralelismo y el ancho de banda de la GPU, e introducen penalizaciones de
 rendimiento importantísimas~\cite[\S{}V.C]{gpu-computing}.
 
 \subsection{Programación científica de alto nivel y las GPUs}
-Tradicionalmente, la programación científica se caracteriza por sus
+La programación de aplicaciones de ciencia e ingeniería se caracteriza por sus
 exigentes requerimientos de performance.  Las bibliotecas científicas suelen
 estar implementadas en lenguajes compilados, típicamente C y Fortran, cuyos
 compiladores realizan optimizaciones agresivas que permiten obtener binarios
@@ -203,8 +201,8 @@ máximo la arquitectura del computador.
 Por otra parte, existen los lenguajes de programación dinámicos (p.ej.~Lisp,
 Python, Ruby, Scheme) que están diseñados para aumentar la eficiencia
 del programador.  Permiten ciclos de desarrollo más rápido, presentan
-abstracciones más cercanas al programador que a la máquina, y ofrecen
-facilidades de mateprogramación~\cite[\S2]{pygpu}.  Como consecuencia, los
+abstracciones más cercanas al problema que a la máquina, y ofrecen
+facilidades de metaprogramación~\cite[\S2]{pygpu}.  Como consecuencia, los
 programas suelen ser más fáciles de implementar, de mantener y de reutilizar,
 y se adaptan mejor al esquema de trabajo de un programador científico,
 típicamente orientado a refinar prototipos en varias iteraciones.
@@ -226,7 +224,7 @@ Introduce varias técnicas de optimización, y administra en lugar del programad
 la ejecución de código y el copiado de datos entre el procesador y la tarjeta
 gráfica.
 
-PyGPU++~\cite{pygpu} (2008) es una biblioteca para escribir funciones para la
+PyGPU~\cite{pygpu} (2008) es una biblioteca para escribir funciones para la
 GPU en Python. Utiliza las capacidades introspectivas del lenguaje,
 introduciendo un decorador que examina el bytecode de la función y anotaciones
 adicionales, y compila el código para la GPU.
@@ -261,7 +259,8 @@ Navier-Stokes, que describe la conservación de momentum en un fluido viscoso,
 de manera análoga a la segunda ley de Newton.  
 \begin{equation}
     \rho\left(\frac{\partial\vel}{\partial t} + \vel\cdot\nabla\vel \right) =
-    \nu\Delta\vel - \nabla p + \mathbf{f}.
+    \text{fuerza por unidad de volumen}.
+    %\nu\Delta\vel - \nabla p + \mathbf{f}.
 \end{equation}
 El término $\rho(\vel\cdot\nabla\vel)$ es denominado aceleración convectiva, y
 explica cómo cambia la velocidad con respecto a la posición en un instante de
@@ -390,83 +389,7 @@ distintos modelos de multiresolución, y diferentes métodos para evaluar la
 velocidad a partir de la vorticidad.
 
 
-
 \newpage
-\section{Hipótesis de Trabajo}
-\begin{enumerate}
-    \item Implementación
-    \item Aceleración con GPUs
-    \item La implementación de los distintos componentes de la simulación
-        abstraerá completamente los detalles de la GPU, 
-\end{enumerate}
-
-\section{Objetivos }
-
-\subsection{Objetivos Generales}
-\emph{(Su extensión no debe exceder el espacio disponible)}
-
-\begin{enumerate}
-    \item
-\end{enumerate}
-
-\subsection{Objetivos Específicos}
-\emph{(Su extensión no debe exceder el espacio disponible) }
-
-\begin{enumerate}
-   \item Evaluar mecanismos de comunicación entre un lenguaje de programación
-       dinámico y hardware gráfico, en términos de rendimiento computacional y
-       conveniencia para el desarrollador.
-   \item Diseñar e implementar simulaciones
-\end{enumerate}
-
-\section{Metodología y Plan de Trabajo}
-\emph{(Su extensión no debe exceder el espacio disponible)}
-
- 
-\section{Resultados}
-
-\subsection{Aportes y Resultados Esperados}
-
-\begin{enumerate}
-    \item Bibloteca
-    \item Ganancia de performance
-    \item Metodología
-    \item 
-\end{enumerate}
- 
-
-\subsection{Formas de Validación}
-
-\emph{(Su extensión no debe exceder el espacio disponible)}
-
-\begin{enumerate}
-    \item
-    \item
-    \item
-\end{enumerate}
- 
-
-\section{Recursos}
-
-\subsection{Recursos disponibles}
-
-\emph{Señale medios y recursos con que cuenta el Departamento de Informática de
-la UTFSM, para realizar el proyecto de tesis (libros, software, laboratorios,
-etc.).}
-
-Los recursos de hardware y software del Laboratorio de Métodos Cuantitativos
-están a disposición para el desarrollo de este proyecto.
-
-\subsection{Recursos solicitados}
-
-\emph{Señale medios y recursos no disponibles en el Departamento de Informática
-de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
-laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
-
-XXX
-
-
-
 \begin{thebibliography}{99}
     \bibitem{gpu-computing}
     John D.~Owens et~al.
@@ -525,9 +448,86 @@ XXX
     Andreas Klöckner.
     PyCUDA.
     \url{http://mathema.tician.de/software/pycuda}
-
-
 \end{thebibliography}
+
+\newpage
+\section{Hipótesis de Trabajo}
+\begin{enumerate}
+    \item Implementación
+    \item Aceleración con GPUs
+    \item La implementación de los distintos componentes de la simulación
+        abstraerá completamente los detalles de la GPU, 
+\end{enumerate}
+
+\newpage
+\section{Objetivos }
+
+\subsection{Objetivos Generales}
+%\emph{(Su extensión no debe exceder el espacio disponible)}
+
+\begin{enumerate}
+    \item
+\end{enumerate}
+
+\subsection{Objetivos Específicos}
+%\emph{(Su extensión no debe exceder el espacio disponible) }
+
+\begin{enumerate}
+   \item Evaluar mecanismos de comunicación entre un lenguaje de programación
+       dinámico y hardware gráfico, en términos de rendimiento computacional y
+       conveniencia para el desarrollador.
+   \item Diseñar e implementar simulaciones
+\end{enumerate}
+
+\newpage
+\section{Metodología y Plan de Trabajo}
+\emph{(Su extensión no debe exceder el espacio disponible)}
+
+ \newpage
+\section{Resultados}
+
+\subsection{Aportes y Resultados Esperados}
+
+\begin{enumerate}
+    \item Bibloteca
+    \item Ganancia de performance
+    \item Metodología
+    \item 
+\end{enumerate}
+ 
+
+\subsection{Formas de Validación}
+
+\emph{(Su extensión no debe exceder el espacio disponible)}
+
+\begin{enumerate}
+    \item
+    \item
+    \item
+\end{enumerate}
+ 
+
+\section{Recursos}
+
+\subsection{Recursos disponibles}
+
+%\emph{Señale medios y recursos con que cuenta el Departamento de Informática de
+%la UTFSM, para realizar el proyecto de tesis (libros, software, laboratorios,
+%etc.).}
+
+Los recursos de hardware y software del Laboratorio de Métodos Cuantitativos
+están a disposición para el desarrollo de este proyecto.
+
+\subsection{Recursos solicitados}
+
+%\emph{Señale medios y recursos no disponibles en el Departamento de Informática
+%de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
+%laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
+
+XXX
+
+
+
 
 
 
