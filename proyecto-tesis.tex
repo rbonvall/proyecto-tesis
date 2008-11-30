@@ -46,7 +46,7 @@
    7 & Profesor guía de tesis       & Luis Salinas Carrasco\tnhl
    8 & Fecha presentación tema de tesis & Martes 9 de diciembre de 2008\tnhl
    9 & Fecha aprobación tema de tesis   & \tnhl
-  10 & Fecha tentativa de término       & Junio de 2009\tnhl
+  10 & Fecha tentativa de término       & Julio de 2009\tnhl
   11 & Comisión interna de graduación   & profe$_1$, \\ profe$_2$, \\ profe$_3$.\tnhl
 \end{tabular}
 \end{center}
@@ -235,10 +235,14 @@ la API de CUDA desde Python, ofreciendo además varias conveniencias adicionales
 como una estructura de datos para representar matrices y vectores, cuyas
 operaciones son ejecutadas transparentemente en la GPU.
 
+Además, entornos comerciales de programación científica como Mathematica y
+Matlab también han comenzado a ofrecer integración transparente con GPUs~%
+\cite{nvidia-mathematica}~\cite{nvidia-matlab}.
+
 
 \subsection{Dinámica de fluídos computacional}
 Una de las áreas de investigación que tradicionalmente ha tenido requerimientos
-exigentes de poder de cómputo para hacer simulaciones es la dinámica de fluídos.
+exigentes de poder de cómputo para sus simulaciones es la dinámica de fluídos.
 La dinámica de fluídos computacional tiene importantes aplicaciones industriales
 en diversas áreas como la aeronáutica, la meteorología y la geología.
 
@@ -247,7 +251,7 @@ dinámica de fluídos consisten en calcular varias propiedades del fluído (p.ej
 la velocidad $\vel$, la presión $p$, la densidad $\rho$, la temperatura $T$) en
 todo el dominio del fluido, durante un intervalo de tiempo.  Estas propiedades
 se llaman variables de estado, y están relacionadas por leyes de conservación y
-ecuaciones de estado.
+ecuaciones de estado, que están expresadas como ecuaciones diferenciales parciales.
 
 En general los problemas de dinámica de fluídos no se pueden resolver
 analíticamente excepto en casos triviales.  La dinámica de fluídos computacional
@@ -285,16 +289,16 @@ localizadas de variables de estado por el fluído.  Las propiedades físicas del
 fluído pueden ser recuperadas como una superposición de las distribuciones
 de todas las partículas.
 
-Las métodos de partículas están basados en la forma lagrangiana de las
-ecuaciones subyacentes.  La forma lagrangiana utiliza como marco de referencia
-las trayectorias de las partículas en el tiempo, y en ella no aparece el término
-de aceleración convectiva.  Las ecuaciones pasan a ser un sistema de ecuaciones
-diferenciales ordinarias:
+Las métodos de partículas están basados en la formulación en coordenadas
+lagrangianas de las ecuaciones subyacentes.  La forma lagrangiana utiliza como
+marco de referencia las trayectorias de las partículas en el tiempo, y en ella
+no aparece el término de aceleración convectiva.  Las ecuaciones pasan a ser un
+sistema de ecuaciones diferenciales ordinarias:
 \begin{align}
     \frac{d\pos_p}{dt} &= \vel_p(\pos_p, t) =
-        \sum_{p'} \mathbf{K}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'}) \\
+        \sum_{p'} \mathbf{K}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'}), &
     \frac{d\xi_p}{dt} &=
-        \sum_{p'} \mathbf{F}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'})
+        \sum_{p'} \mathbf{F}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'});
 \end{align}
 donde $\xi$ es alguna propiedad del fluído, y $\mathbf{K}$ y $\mathbf{F}$ 
 representan la dinámica del sistema físico simulado.
@@ -318,7 +322,7 @@ continuos debido a dificultades numéricas y de implementación.  Trabajos
 teóricos recientes han abordado exitosamente los problemas numéricos, y han
 demostrado las ventajas de estos métodos:  adaptividad, capacidad de
 multiresolución, estabilidad de la discretización y un nexo inherente entre
-la simulación y la física representada~\cite{ppm}.
+la simulación y el fenómeno físico subyacente~\cite{ppm}.
 
 Un resultado teórico importante es la necesidad de reubicar periódicamente
 las partículas sobre una malla regular para asegurar la convergencia.  Esto ha
@@ -334,15 +338,15 @@ mapeos adaptivos globales,
 refinamientos adaptivos de malla
 y análisis multiresolución usando wavelets~\cite{multiresolution}.
 
-Todas estas características adicionales que apuntan a lograr un balance
-conveniente entre precisión y tiempo de cómputo complementan el framework 
+Todas estas características adicionales, que apuntan a lograr un balance
+conveniente entre precisión y tiempo de cómputo, complementan el framework 
 genérico para describir los métodos de partículas.  En general, cada iteración
 de una simulación tiene algunas etapas fijas, que están relacionadas con
 diferentes aspectos del fluído: la convección, la difusión, la satisfacción de
 las condiciones de borde, la adaptación espacial, y (para los métodos de vórtices)
 la evaluación de la velocidad.  Para cada una de estas etapas, existen varios
 modelos que pueden ser usados:  por ejemplo, para la convección, se puede
-utilizar cualquier esquema de integración numérico de EDOs;  para la difusión, 
+utilizar cualquier esquema de integración numérica de EDOs;  para la difusión, 
 se ha propuesto por lo menos siete esquemas diferentes~\cite[\S1.2]{barba}.
 
 Hasta hace algunos años, la escasez de bibliotecas científicas relevantes y la
@@ -374,10 +378,42 @@ expresando los pasos del algoritmo como shaders del pipeline gráfico.
 
 \subsection{Propuesta de tesis}
 
-Este proyecto de tesis consiste en el diseño e implementación de un prototipo de
-una biblioteca para hacer simulaciones de fluídos mediante métodos de
-partículas, en un lenguaje de programación dinámico, que sea acelerado en un
-GPU.
+Este proyecto de tesis consiste en el análisis, diseño e implementación de un
+prototipo de una biblioteca para hacer simulaciones de fluídos con las
+siguientes características:
+\begin{itemize}
+    \item el modelo utilizado será el framework genérico de métodos de
+       partículas propuesto y descrito por Koumoutsakos~\cite{multiscale}.
+    \item los componentes de la simulación serán implementados en el lenguaje de
+        programación dinámico Python;
+    \item la simulación será acelerada transparentemente en hardware gráfico;
+    \item 
+\end{itemize}
+El propósito de esta biblioteca es servir de prueba de concepto para el
+desarrollo de bibliotecas de propósito específico, en lenguajes de alto nivel,
+que puedan explotar eficiente y transparentemente el hardware paralelo disponible.
+
+La factibilidad de implementar eficientemente métodos de partículas en hardware
+gráfico está sustentada por el trabajo de Rossinelli y Koumoutsakos, que
+describe un método de vórtices preciso y eficiente implementado en una
+GPU~\cite{vortex-gpu}.
+
+La factibilidad de integrar transparentemente la GPU con lenguajes de
+programación de propósito general a través de abstracciones de alto nivel está
+sustentada en varios desarrollos recientes, como los mencionados
+GPU++~\cite{gpupp}, PyGPU~\cite{pygpu} y PyCUDA~\cite{pycuda}.
+
+El modelo de ejecución de la GPU no incentiva el desarrollo de componentes
+totalmente desacoplados.  Como la compilación de los kernels se realiza en tiempo
+de ejecución, y cargar los streams de datos es muy costoso, conviene
+que toda la simulación sea cargada en la GPU de manera unificada.  Para
+implementar eficientemente componentes desacoplados e intercambiables, la
+la simulación no debe ser descrita algorítmicamente, sino declarativamente.  En
+lenguajes de alto nivel, es posible combinar ambos enfoques usando mecanismos de
+metaprogramación e introspección.  La factibilidad de utilizar estas técnicas
+está sustentada en bibliotecas que hacen uso de ellas, como OpenFOAM~(en C++,
+para simulaciones de fluidos)~\cite{openfoam} y PyGPU~(en Python, para
+procesamiento de imágenes)~\cite{pygpu}.
 
 
 
@@ -385,29 +421,29 @@ GPU.
 
 
 
-La tendencia en los entornos de programación de GPUs es a ofrecer interfaces
-cada vez más genéricas, de modo de poder ser utilizadas para escribir programas
-de propósito general.  Esto puede ser descrito como un acercamiento bottom-up
-al desarrollo de software de alto desempeño:  partiendo del hardware gráfico,
-se crean las abstracciones que serán utilizadas para crear programas.
-
-Esta tesis intenta explorar un acercamiento top-down, enfocado a un dominio de
-problema específico: cómo diseñar una biblioteca de alto nivel, en un lenguaje
-de características dinámicas, cuyos componentes puedan correr en la GPU de
-manera transparente al programador.  La idea es que las abstracciones provistas
-por la interfaz estén en el dominio de los métodos de partículas.
-
-Como producto final se espera presentar una pequeña biblioteca que sirva de
-prueba de concepto para el desarrollo de aplicaciones aceleradas por GPU en un
-dominio particular, evaluando el impacto en performance y complejidad de
-programación de las decisiones de diseño tomadas.
-
-Con el fin de acotar el número de factores involucrados, el trabajo de tesis se
-enfocará en la implementación de métodos de vórtices en dos dimensiones.  Varios
-tipos de componentes pueden ser integrados en un método de este tipo; por
-ejemplo: diferentes condiciones de borde, diferentes modelos de difusión,
-distintos modelos de multiresolución, y diferentes métodos para evaluar la
-velocidad a partir de la vorticidad.
+%La tendencia en los entornos de programación de GPUs es a ofrecer interfaces
+%cada vez más genéricas, de modo de poder ser utilizadas para escribir programas
+%de propósito general.  Esto puede ser descrito como un acercamiento bottom-up
+%al desarrollo de software de alto desempeño:  partiendo del hardware gráfico,
+%se crean las abstracciones que serán utilizadas para crear programas.
+%
+%Esta tesis intenta explorar un acercamiento top-down, enfocado a un dominio de
+%problema específico: cómo diseñar una biblioteca de alto nivel, en un lenguaje
+%de características dinámicas, cuyos componentes puedan correr en la GPU de
+%manera transparente al programador.  La idea es que las abstracciones provistas
+%por la interfaz estén en el dominio de los métodos de partículas.
+%
+%Como producto final se espera presentar una pequeña biblioteca que sirva de
+%prueba de concepto para el desarrollo de aplicaciones aceleradas por GPU en un
+%dominio particular, evaluando el impacto en performance y complejidad de
+%programación de las decisiones de diseño tomadas.
+%
+%Con el fin de acotar el número de factores involucrados, el trabajo de tesis se
+%enfocará en la implementación de métodos de vórtices en dos dimensiones.  Varios
+%tipos de componentes pueden ser integrados en un método de este tipo; por
+%ejemplo: diferentes condiciones de borde, diferentes modelos de difusión,
+%distintos modelos de multiresolución, y diferentes métodos para evaluar la
+%velocidad a partir de la vorticidad.
 
 
 \newpage
@@ -415,7 +451,7 @@ velocidad a partir de la vorticidad.
     \bibitem{gpu-computing}
     John D.~Owens et~al.
     \reftitle{GPU Computing.}
-    Proceedings of the IEEE, May 2008.
+    Proceedings of the IEEE, May 2008, 879--899.
 
     \bibitem{multiresolution}
     Michael Bergdorf, Petros Koumoutsakos.
@@ -465,17 +501,33 @@ velocidad a partir de la vorticidad.
     \reftitle{Parallel Programming.}
     Pearson Prentice Hall, 2nd Edition, 2005.
 
+    \bibitem{nvidia-mathematica}
+    Nvidia Press Release.
+    \reftitle{Mathematica Users Get 100x Performance Boost From NVIDIA CUDA.}
+    \url{http://www.nvidia.com/object/io_1227010734073.html}
+
+    \bibitem{nvidia-matlab}
+    Nvidia Developer Zone.
+    \reftitle{MATLAB plug-in for CUDA.}
+    \url{http://developer.nvidia.com/object/matlab_cuda.html}
+
     \bibitem{top500}
     \reftitle{Top500 Supercomputing Sites.}
     \url{http://www.top500.org}
 
-    \bibitem{hpc-gpu-cuda-slides}
-    HPC GPU CUDA slides.
+    \bibitem{openfoam}
+    OpenCFD Ltd.
+    \reftitle{OpenFOAM, The Open Source CFD Toolbox.}
+    \url{http://www.opencfd.co.uk/openfoam/}
 
     \bibitem{pycuda}
     Andreas Klöckner.
     \reftitle{PyCUDA.}
     \url{http://mathema.tician.de/software/pycuda}
+
+    \bibitem{hpc-gpu-cuda-slides}
+    HPC GPU CUDA slides.
+
 \end{thebibliography}
 
 \newpage
@@ -483,8 +535,9 @@ velocidad a partir de la vorticidad.
 \begin{enumerate}
     \item Implementación
     \item La biblioteca
-    \item La implementación de los componentes de los métodos de partículas abstraerá completamente los detalles de la GPU.
-        abstraerá completamente los detalles de la GPU.
+    \item La implementación de los componentes de los métodos de partículas
+        abstraerá completamente los detalles de la GPU.  abstraerá completamente los
+        detalles de la GPU.
     \item Las simulaciones 
 \end{enumerate}
 
