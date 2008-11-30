@@ -36,17 +36,18 @@
     >{\bfseries\raggedright\hspace{0pt}} p{0.27\textwidth} |%
     >{\raggedright\hspace{0pt}}          p{0.5\textwidth} <{} |%
 }\hline
-   1 & Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations in a dynamic programming language}. \tnhl
-   2 & Nombre del alumno            & Roberto Javier Bonvallet Carrasco \tnhl
-   3 & Número de teléfono           & no tiene \tnhl
-   4 & Correo electrónico           & \texttt{rbonvall@inf.utfsm.cl} \tnhl
+   1 & Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations
+                                      in a dynamic programming language}.\tnhl
+   2 & Nombre del alumno            & Roberto Javier Bonvallet Carrasco\tnhl
+   3 & Número de teléfono           & no tiene\tnhl
+   4 & Correo electrónico           & \texttt{rbonvall@inf.utfsm.cl}\tnhl
    5 & Fecha de ingreso al programa & Primer semestre de 2006 \tnhl
    6 & Pregrado                     & Licenciatura en Ingeniería Informática, UTFSM, 2006\tnhl
-   7 & Profesor guía de tesis       & Luis Salinas Carrasco \tnhl
-   8 & Fecha presentación tema de tesis & Martes 9 de diciembre de 2008 \tnhl
+   7 & Profesor guía de tesis       & Luis Salinas Carrasco\tnhl
+   8 & Fecha presentación tema de tesis & Martes 9 de diciembre de 2008\tnhl
    9 & Fecha aprobación tema de tesis   & \tnhl
-  10 & Fecha tentativa de término       & Junio de 2009 \tnhl
-  11 & Comisión interna de graduación   & profe$_1$, \\ profe$_2$, \\ profe$_3$.  \tnhl
+  10 & Fecha tentativa de término       & Junio de 2009\tnhl
+  11 & Comisión interna de graduación   & profe$_1$, \\ profe$_2$, \\ profe$_3$.\tnhl
 \end{tabular}
 \end{center}
 \normalsize
@@ -333,15 +334,26 @@ mapeos adaptivos globales,
 refinamientos adaptivos de malla
 y análisis multiresolución usando wavelets~\cite{multiresolution}.
 
-La escasez de bibliotecas científicas relevantes y la dificultad de paralelizar
-eficientemente los métodos fueron problemas que impidieron la implementación
-eficiente de estos métodos.  Recientemente el ETH de Zúrich desarrolló una
+Todas estas características adicionales que apuntan a lograr un balance
+conveniente entre precisión y tiempo de cómputo complementan el framework 
+genérico para describir los métodos de partículas.  En general, cada iteración
+de una simulación tiene algunas etapas fijas, que están relacionadas con
+diferentes aspectos del fluído: la convección, la difusión, la satisfacción de
+las condiciones de borde, la adaptación espacial, y (para los métodos de vórtices)
+la evaluación de la velocidad.  Para cada una de estas etapas, existen varios
+modelos que pueden ser usados:  por ejemplo, para la convección, se puede
+utilizar cualquier esquema de integración numérico de EDOs;  para la difusión, 
+se ha propuesto por lo menos siete esquemas diferentes~\cite[\S1.2]{barba}.
+
+Hasta hace algunos años, la escasez de bibliotecas científicas relevantes y la
+dificultad de paralelizar eficientemente estos métodos fueron problemas que
+impidieron su implementación eficiente.  Recientemente, el ETH de Zúrich desarrolló una
 biblioteca paralela para métodos partícula-malla que facilita implementarlos
 eficientemente sobre arquitecturas paralelas de gran escala~\cite{ppm}.
 
 También ha habido trabajos recientes con simulaciones de fluídos usando partículas
 en GPUs, principalmente en el área de computación gráfica.  Los métodos usados
-para visualización buscan conseguir realismo visual, y no resuelven con
+para visualización sólo buscan conseguir realismo visual, y no resuelven con
 exactitud las ecuaciones que discretizan.  Una implementación de un método de
 vórtices publicada en julio de 2008 asegura ser la primera simulación de fluídos
 exacta usando partículas en la GPU~\cite{vortex-gpu}.  Esta implementación está
@@ -360,7 +372,16 @@ expresando los pasos del algoritmo como shaders del pipeline gráfico.
 %resolviendo la ecuación de Poisson: $\Delta\vel u = -\nabla\times\vort$
 
 
-\subsection{Objetivo del proyecto}
+\subsection{Propuesta de tesis}
+
+Este proyecto de tesis consiste en el diseño e implementación de un prototipo de
+una biblioteca para hacer simulaciones de fluídos mediante métodos de
+partículas, en un lenguaje de programación dinámico, que sea acelerado en un
+GPU.
+
+
+
+
 
 
 
@@ -396,27 +417,9 @@ velocidad a partir de la vorticidad.
     \reftitle{GPU Computing.}
     Proceedings of the IEEE, May 2008.
 
-    \bibitem{parallel-programming}
-    Barry Wilkinson, Michael Allen.
-    \reftitle{Parallel Programming.}
-
-    \bibitem{hpc-gpu-cuda-slides}
-    HPC GPU CUDA slides.
-
-    \bibitem{gpupp}
-    Thomas C.~Jansen.
-    \reftitle{GPU++: An Embedded GPU Development System for
-      General-Purpose Computations.}
-    Tesis doctoral, Technischen Universität München, 2007.
-
-    \bibitem{pygpu}
-    Calle Lejdfors.
-    \reftitle{High-level GPU programming: Domain-specific optimization and inference.}
-    Tesis doctoral, Lund University, 2008.
-
     \bibitem{multiresolution}
     Michael Bergdorf, Petros Koumoutsakos.
-    \reftitle{Multiresolution Particle Methods}
+    \reftitle{Multiresolution Particle Methods.}
     Complex Effects in Large Eddy Simulations, 56~(2006) 49--61.
 
     \bibitem{multiscale}
@@ -435,18 +438,43 @@ velocidad a partir de la vorticidad.
     \reftitle{Vortex methods for incompressible flow simulations on the GPU.}
     Visual Comput~(2008).
 
+    \bibitem{barba}
+    Lorena Barba.
+    \reftitle{Vortex Method for computing high-Reynolds number flows:
+    Increased accuracy with a fully mesh-less formulation.}
+    Tesis doctoral, California Institute of Technology, 2004.
+
+    \bibitem{gpupp}
+    Thomas C.~Jansen.
+    \reftitle{GPU++: An Embedded GPU Development System for
+      General-Purpose Computations.}
+    Tesis doctoral, Technischen Universität München, 2007.
+
+    \bibitem{pygpu}
+    Calle Lejdfors.
+    \reftitle{High-level GPU programming: Domain-specific optimization and inference.}
+    Tesis doctoral, Lund University, 2008.
+
     \bibitem{brookgpu}
     Ian Buck et~al.
     \reftitle{Brook for GPUs: Stream Computing on Graphics Hardware.}
     Stanford University.
 
+    \bibitem{parallel-programming}
+    Barry Wilkinson, Michael Allen.
+    \reftitle{Parallel Programming.}
+    Pearson Prentice Hall, 2nd Edition, 2005.
+
     \bibitem{top500}
     \reftitle{Top500 Supercomputing Sites.}
     \url{http://www.top500.org}
 
+    \bibitem{hpc-gpu-cuda-slides}
+    HPC GPU CUDA slides.
+
     \bibitem{pycuda}
     Andreas Klöckner.
-    PyCUDA.
+    \reftitle{PyCUDA.}
     \url{http://mathema.tician.de/software/pycuda}
 \end{thebibliography}
 
@@ -454,10 +482,10 @@ velocidad a partir de la vorticidad.
 \section{Hipótesis de Trabajo}
 \begin{enumerate}
     \item Implementación
-    \item Aceleración con GPUs
-    \item La implementación de los distintos componentes de la simulación
-        abstraerá completamente los detalles de la GPU, 
-\end{enumerate}
+    \item La biblioteca
+    \item La implementación de los componentes de los métodos de partículas abstraerá completamente los detalles de la GPU.
+        abstraerá completamente los detalles de la GPU.
+    \item Las simulaciones 
 
 \newpage
 \section{Objetivos }
@@ -466,7 +494,10 @@ velocidad a partir de la vorticidad.
 %\emph{(Su extensión no debe exceder el espacio disponible)}
 
 \begin{enumerate}
-    \item
+    \item Explorar la posibilidad de desarrollar bibliotecas de software de
+        propósito específico que aprovechen arquitecturas de hardware paralelas
+        de manera transparente.
+    \item 
 \end{enumerate}
 
 \subsection{Objetivos Específicos}
@@ -474,9 +505,14 @@ velocidad a partir de la vorticidad.
 
 \begin{enumerate}
    \item Evaluar mecanismos de comunicación entre un lenguaje de programación
-       dinámico y hardware gráfico, en términos de rendimiento computacional y
+       dinámico y el hardware gráfico, en términos de rendimiento computacional y
        conveniencia para el desarrollador.
-   \item Diseñar e implementar simulaciones
+   \item Diseñar e implementar un prototipo de biblioteca
+       para simulaciones de fluídos mediante métodos de partículas,
+       en un lenguaje de programación dinámico,
+       basada en componentes intercambiables,
+       y acelerada en hardware gráfico.
+   \item 
 \end{enumerate}
 
 \newpage
@@ -489,10 +525,12 @@ velocidad a partir de la vorticidad.
 \subsection{Aportes y Resultados Esperados}
 
 \begin{enumerate}
-    \item Bibloteca
+    \item Una biblioteca que 
     \item Ganancia de performance
     \item Metodología
-    \item 
+    \item Publicación de artículos en workshops o conferencias internacionales
+        relacionadas con computación de alto desempeño, dinámica de fluídos
+        computacional y lenguajes de programación dinámicos.
 \end{enumerate}
  
 
