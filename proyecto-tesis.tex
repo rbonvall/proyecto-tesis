@@ -55,10 +55,8 @@
 
 \newpage
 \section*{Resumen}
-
-\emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
-objetivos, resultados esperados y palabras claves. }
-
+%\emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
+%objetivos, resultados esperados y palabras claves. }
 POR ESCRIBIR
 
 \paragraph{Palabras claves:}
@@ -70,11 +68,8 @@ computación en GPUs,
 lenguajes de programación dinámicos.
 
 
-\newpage
 \section*{Abstract}
-
-\emph{Lo mismo, en inglés}
-
+%\emph{Lo mismo, en inglés}
 TO BE TRANSLATED
 
 \paragraph{Keywords:}
@@ -382,7 +377,6 @@ expresando los pasos del algoritmo como shaders del pipeline gráfico.
 
 
 \subsection{Propuesta de tesis}
-
 Este proyecto de tesis consiste en el análisis, diseño e implementación de un
 prototipo de una biblioteca para hacer simulaciones de fluídos con las
 siguientes características:
@@ -392,11 +386,13 @@ siguientes características:
     \item los componentes de la simulación serán implementados en el lenguaje de
         programación dinámico Python;
     \item la simulación será acelerada transparentemente en hardware gráfico;
-    \item se 
 \end{itemize}
 El propósito del proyecto es servir de prueba de concepto para el
 desarrollo de bibliotecas de propósito específico, en lenguajes de alto nivel,
 que puedan explotar eficiente y transparentemente el hardware paralelo disponible.
+
+%Los objetivos del proyecto,  son obtener tiempos de ejecución mejores que los que se
+%pueden lograr usando sólo la CPU, 
 
 La factibilidad de implementar eficientemente métodos de partículas en hardware
 gráfico está sustentada por el trabajo de Rossinelli y Koumoutsakos, que
@@ -419,37 +415,6 @@ metaprogramación e introspección.  La factibilidad de utilizar estas técnicas
 está sustentada en bibliotecas que hacen uso de ellas, como OpenFOAM~(en C++,
 para simulaciones de fluidos)~\cite{openfoam} y PyGPU~(en Python, para
 procesamiento de imágenes)~\cite{pygpu}.
-
-
-
-
-
-
-
-%La tendencia en los entornos de programación de GPUs es a ofrecer interfaces
-%cada vez más genéricas, de modo de poder ser utilizadas para escribir programas
-%de propósito general.  Esto puede ser descrito como un acercamiento bottom-up
-%al desarrollo de software de alto desempeño:  partiendo del hardware gráfico,
-%se crean las abstracciones que serán utilizadas para crear programas.
-%
-%Esta tesis intenta explorar un acercamiento top-down, enfocado a un dominio de
-%problema específico: cómo diseñar una biblioteca de alto nivel, en un lenguaje
-%de características dinámicas, cuyos componentes puedan correr en la GPU de
-%manera transparente al programador.  La idea es que las abstracciones provistas
-%por la interfaz estén en el dominio de los métodos de partículas.
-%
-%Como producto final se espera presentar una pequeña biblioteca que sirva de
-%prueba de concepto para el desarrollo de aplicaciones aceleradas por GPU en un
-%dominio particular, evaluando el impacto en performance y complejidad de
-%programación de las decisiones de diseño tomadas.
-%
-%Con el fin de acotar el número de factores involucrados, el trabajo de tesis se
-%enfocará en la implementación de métodos de vórtices en dos dimensiones.  Varios
-%tipos de componentes pueden ser integrados en un método de este tipo; por
-%ejemplo: diferentes condiciones de borde, diferentes modelos de difusión,
-%distintos modelos de multiresolución, y diferentes métodos para evaluar la
-%velocidad a partir de la vorticidad.
-
 
 \newpage
 \begin{thebibliography}{99}
@@ -536,43 +501,47 @@ procesamiento de imágenes)~\cite{pygpu}.
 \end{thebibliography}
 
 \newpage
-\section{Hipótesis de Trabajo}
+\section{Hipótesis de trabajo}
+Las hipótesis que sustentan este proyecto son las siguientes.
 \begin{enumerate}
-    \item acelerará
-    \item 
-    \item La implementación de los componentes de los métodos de partículas
-        abstraerá completamente los detalles de la GPU.
-    \item 
+    \item Usando la GPU, es posible mejorar el rendimiento computacional de los métodos de
+        partículas.
+    \item Es posible describir las simulaciones de fluidos en un lenguaje de
+        alto nivel de manera genérica y descriptiva, abstrayendo los detalles de
+        implementación.
+    \item Mediante técnicas de metaprogramación, es posible ejecutar las
+        simulaciones de fluidos en la GPU de manera transparente.
 \end{enumerate}
 
-\newpage
+%\newpage
 \section{Objetivos }
 
 \subsection{Objetivos generales}
-%\emph{(Su extensión no debe exceder el espacio disponible)}
-
 \begin{enumerate}
-    \item Estudiar el uso de una arquitectura de hardware paralela novedosa y de
-        costo accesible para acelerar aplicaciones intensivas en cómputo.
     \item Explorar la posibilidad de desarrollar bibliotecas de software de
         propósito específico que aprovechen arquitecturas de hardware paralelas
         de manera transparente.
-    \item high-level
+    \item Estudiar el uso de una arquitectura de hardware paralela novedosa y de
+        costo accesible para acelerar aplicaciones intensivas en cómputo.
+    \item Evaluar mecanismos de comunicación entre un lenguaje de programación
+        dinámico y el hardware gráfico, en términos de rendimiento computacional y
+        complejidad para el desarrollador.
 \end{enumerate}
 
 \subsection{Objetivos específicos}
-%\emph{(Su extensión no debe exceder el espacio disponible) }
-
 \begin{enumerate}
    \item Diseñar e implementar un prototipo de biblioteca
        para simulaciones de fluídos mediante métodos de partículas,
        en un lenguaje de programación dinámico,
        basada en componentes intercambiables,
-       y acelerada en hardware gráfico.
-   \item Evaluar mecanismos de comunicación entre un lenguaje de programación
-       dinámico y el hardware gráfico, en términos de rendimiento computacional y
-       conveniencia para el desarrollador.
-   \item 
+       y acelerada en hardware gráfico de manera transparente.
+   \item Correr simulaciones de fluidos con tiempos de ejecución comparables a los
+       obtenidos usando el hardware gráfico directamente.
+   \item Correr simulaciones de fluidos con tiempos de ejecución sustancialmente menores
+       a los obtenidos usando un procesador común.
+   \item Describir simulaciones de fluidos mediante componentes que permitan
+       correr simulaciones con una complejidad de desarrollo sustancialmente
+       menor que la enfrentada al programar los métodos directamente.
 \end{enumerate}
 
 \newpage
@@ -588,16 +557,19 @@ La metodología del proyecto se llevará a cabo en las siguientes etapas:
         base trabajos existentes en la literatura.
     \item \textbf{Prototipo de integración de GPU con el intérprete del lenguaje:}
         evaluación e implementación de distintos métodos de integración del
-        hardware con el intérprete existentes en la literatura y en el entorno
-        del software de código abierto.
+        hardware con el intérprete presentados en la literatura y en bibliotecas
+        de código abierto.
     \item \textbf{Análisis y diseño de la biblioteca:}
         definición de los requerimientos, los algoritmos a usar, el modelo de
         ejecución, las técnicas de metaprogramación, la interfaz y los
         componentes de la biblioteca.
     \item \textbf{Definición de experimentos, métricas de evaluación y problemas de prueba:}
-    \item \textbf{Implementación de la biblioteca:}
-    \item \textbf{Ejecución de experimentos y recolección de resultados:}
-    \item \textbf{Publicación y presentación de la tesis:}
+        recolección de benchmarks estándares de fluidos para evaluar convergencia y
+        tiempo de ejecución, junto con métricas para evaluar performance y
+        complejidad de desarrollo, y diseño de los experimentos a ejecutar.
+    \item \textbf{Implementación de la biblioteca.}
+    \item \textbf{Ejecución de experimentos y recolección de resultados.}
+    \item \textbf{Publicación y presentación de la tesis.}
 \end{enumerate}
 
 El plan de trabajo propuesto es el siguiente:
@@ -612,7 +584,8 @@ El plan de trabajo propuesto es el siguiente:
     Prototipo de integración
     GPU-intérprete            & 1 de marzo de 2009 \tnhl
     Análisis y diseño         & 1 de abril de 2009 \tnhl
-    Definición de experimentos y pruebas & 1 de mayo de 2009 \tnhl
+    Definición de experimentos, evaluación
+    y pruebas                 & 1 de mayo de 2009 \tnhl
     Implementación            & 1 de junio de 2009 \tnhl
     Experimentos y resultados & 1 de julio de 2009 \tnhl
     Presentación tesis        & 31 de julio de 2009 \tnhl
@@ -623,25 +596,38 @@ El plan de trabajo propuesto es el siguiente:
 \section{Resultados}
 
 \subsection{Aportes y resultados esperados}
-
+Los aportes y resultados que se busca obtener a través de este proyecto son los
+siguientes:
 \begin{enumerate}
-    \item Una biblioteca que 
-    \item Ganancia de performance
-    \item Metodología
-    \item Publicación de artículos en workshops o conferencias internacionales
-        relacionadas con computación de alto desempeño, dinámica de fluídos
-        computacional y lenguajes de programación dinámicos.
+    \item Una implementación de prueba de concepto de la biblioteca descrita.
+    \item Una metodología para implementar bibliotecas de propósito específico
+        aceleradas en la GPU en lenguajes de alto nivel.
+    \item Evidencia experimental de que es posible acelerar simulaciones de
+        fluidos en la GPU eficientemente.
+    \item Publicación de artículos en journals, workshops o
+        conferencias internacionales
+        relacionados con
+        computación de alto desempeño,
+        dinámica de fluídos computacional y
+        lenguajes de programación.
 \end{enumerate}
  
-
 \subsection{Formas de validación}
-%\emph{(Su extensión no debe exceder el espacio disponible)}
-\begin{enumerate}
-    \item
-    \item
-    \item
-\end{enumerate}
- 
+Los dos aspectos que se desea evaluar en este proyecto son el
+rendimiento computacional y la complejidad de desarrollo.
+
+El rendimiento computacional se evaluará en terminos de tiempo de cómputo, y
+como parámetro de comparación se desarrollará prototipos funcionales sencillos
+con características que sirvan como referencia para la evaluación.
+
+Para evaluar la complejidad de desarrollo, se propondrá métricas sencillas
+utilizadas comúnmente en ingeniería de software; por ejemplo: cantidad de líneas de código,
+complejidad ciclomática y estimación de costos basada en Cocomo.
+
+Para las simulaciones se utilizará problemas estándares de fluidos usados
+tradicionalmente en la literatura para hacer pruebas.  Generalmente, se utiliza
+fluidos que tienen una solución analítica, o que presentan características que
+permiten reconocer si la convergencia ha sido adecuada.
 
 \section{Recursos}
 
@@ -651,7 +637,7 @@ El plan de trabajo propuesto es el siguiente:
 %la UTFSM, para realizar el proyecto de tesis (libros, software, laboratorios,
 %etc.).}
 
-Los recursos de hardware y software del Laboratorio de Métodos Cuantitativos
+Los recursos del Laboratorio de Métodos Cuantitativos
 están a disposición para el desarrollo de este proyecto.
 
 \subsection{Recursos solicitados}
@@ -660,7 +646,7 @@ están a disposición para el desarrollo de este proyecto.
 %de la UTFSM, necesarios para realizar el proyecto de tesis (libros, software,
 %laboratorios, etc. ). Su extensión no debe exceder el espacio disponible}
 
-XXX
+No hay recursos por solicitar.
 
 
 
