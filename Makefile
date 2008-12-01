@@ -1,7 +1,7 @@
 DOC = $(shell ls *.tex | sed -e 's/[.]tex$$//')
 
-pdf: $(DOC).pdf
 dvi: $(DOC).dvi
+pdf: $(DOC).pdf
 
 %.dvi: %.tex
 	latex $<
