@@ -18,12 +18,10 @@
 \newcommand{\tnhl}{\tabularnewline\hline}
 
 \title{Proyecto de Tesis \\
-    Magíster en Ciencias de la Ingeniería Informática \\
-    \textsc{Borrador \#2}
-}
+    Magíster en Ciencias de la Ingeniería Informática}
 \date{}
 \author{Roberto Bonvallet}
-\date{Noviembre de 2008}
+\date{Diciembre de 2008}
 
 \begin{document}
 %\fontfamily{phv} % Helvetica
@@ -32,23 +30,23 @@
 \Large
 \begin{center}
 \begin{tabular}{|%
-    r <{.} @{ } %
+    r @{ } %
     >{\bfseries\raggedright\hspace{0pt}} p{0.3\textwidth} |%
     >{\raggedright\hspace{0pt}}          p{0.6\textwidth} <{} |%
 }\hline
-   1 & Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations
+   1.& Título del proyecto de tesis & \emph{GPU-accelerated particle-based fluid simulations
                                       in a dynamic programming language}.\tnhl
-   2 & Nombre del alumno            & Roberto Javier Bonvallet Carrasco\tnhl
-   3 & Número de teléfono           & no tiene\tnhl
-   4 & Correo electrónico           & \texttt{rbonvall@inf.utfsm.cl}\tnhl
-   5 & Fecha de ingreso al programa & Primer semestre de 2006 \tnhl
-   6 & Pregrado                     & Licenciatura en Ingeniería Informática, \\
+   2.& Nombre del alumno            & Roberto Javier Bonvallet Carrasco\tnhl
+   3.& Número de teléfono           & +56 32 2654423\tnhl
+   4.& Correo electrónico           & \texttt{rbonvall@inf.utfsm.cl}\tnhl
+   5.& Fecha de ingreso al programa & Primer semestre de 2006 \tnhl
+   6.& Pregrado                     & Licenciatura en Ingeniería Informática, \\
                                       Universidad Técnica Federico Santa María, 2006\tnhl
-   7 & Profesor guía de tesis       & Luis Salinas Carrasco\tnhl
-   8 & Fecha presentación tema de tesis & Martes 9 de diciembre de 2008\tnhl
-   9 & Fecha aprobación tema de tesis   & \tnhl
-  10 & Fecha tentativa de término       & Julio de 2009\tnhl
-  11 & Comisión interna de graduación   & profe$_1$, \\ profe$_2$, \\ profe$_3$.\tnhl
+   7.& Profesor guía de tesis       & Luis Salinas Carrasco\tnhl
+   8.& Fecha presentación tema de tesis & Martes 9 de diciembre de 2008\tnhl
+   9.& Fecha aprobación tema de tesis   & \tnhl
+  10.& Fecha tentativa de término       & Julio de 2009\tnhl
+  11.& Comisión interna de graduación   & \tabularnewline&&\tabularnewline&& \tnhl
 \end{tabular}
 \end{center}
 \normalsize
@@ -57,27 +55,72 @@
 \section*{Resumen}
 %\emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
 %objetivos, resultados esperados y palabras claves. }
-POR ESCRIBIR
+
+Las tarjetas gráficas (GPUs) han pasado a formar parte del
+repertorio de arquitecturas de computación de alto desempeño (HPC), como
+consecuencia de su evolución en términos de poder de cómputo y programabilidad,
+y su bajo costo.  Las GPUs son cada vez más utilizadas para acelerar
+aplicaciones no gráficas, que deben ser estructuradas según el paradigma de
+stream processing para explotar el paralelismo.
+
+La dinámica de fluidos computacional (CFD) es una de las disciplinas que 
+exige recursos de HPC. Los métodos de partículas, una clase de técnicas de CFD, 
+no han sido muy utilizados en la práctica, pero trabajos recientes han probado
+que gozan de ventajas numéricas sobre métodos tradicionales, y su implementación
+eficiente es un tema de investigación activo.
+
+Las aplicaciones HPC suelen ser desarrolladas en lenguajes compilados, que
+optimizan el uso del hardware.  Los lenguajes interpretados sacrifican
+performance por conveniencia de desarrollo, y no aprovechan el hardware
+directamente, pero pueden ser extendidos mediante componentes binarios.  Esto
+permite combinar la eficiencia de los lenguajes compilados con la flexibilidad
+de los lenguajes dinámicos.
+
+Este proyecto de tesis consiste en el desarrollo de un prototipo de biblioteca
+para simulaciones de fluidos mediante métodos partículas, descritas usando
+componentes de alto nivel en un entorno de programación dinámico, y acelerada
+transparentemente en la GPUs mediante técnicas de metaprogramación.
 
 \paragraph{Palabras claves:}
 computación de alto desempeño,
-dinámica de fluídos computacional,
-métodos de partículas,
 %métodos de vórtices,
 computación en GPUs,
+dinámica de fluidos computacional,
+métodos de partículas,
 lenguajes de programación dinámicos.
 
 
 \section*{Abstract}
-%\emph{Lo mismo, en inglés}
-TO BE TRANSLATED
+Graphic processing units (GPUs) have become a integral part
+of the High Performance Computing architecture repertoire, as a consequence of
+their evolution in terms of computing power and programmability, and their
+affordable cost.  GPUs are being increasingly used to accelerate non-graphic
+applications, that have to be described in terms of the stream-processing
+paradigm in order to exploit the parallelism.
+
+Computational Fluid Dynamics (CFD) is one of the disciplines that requires HPC
+resources.  Particle Methods, a CFD class of techniques, have not been widely
+used in practice, but recent works have proven that they enjoy numerical
+advantages over traditional methods, and their efficient implementation is a
+subject of current research.
+
+HPC applications are usually developed in compiled languages, that optimize the
+use of hardware.  Interpreted languages sacrifice performance for development
+convenience, and do not take direct advantage of the hardware, but can be
+extended with binary components, enabling a compromise between the efficiency of
+compiled code and the flexibility of dynamic languages.
+
+This thesis proposal consists in the development of a proof-of-concept
+particle-based fluid simulation library, described by high-level components in a
+dynamic programming environment, and transparently accelerated on the GPU by
+using metaprogramming techniques.
 
 \paragraph{Keywords:}
 High Performance Computing,
-Computational Fluid Dynamics,
-Particle Methods,
 %Vortex Methods,
 General Purpose GPU Computing,
+Computational Fluid Dynamics,
+Particle Methods,
 Dynamic Programming Languages.
 
 \newpage
@@ -92,7 +135,7 @@ Dynamic Programming Languages.
 %adicionales incluya la lista de referencias)}
 
 El trabajo de tesis propuesto consiste en el análisis, diseño e implementación
-de componentes para hacer simulaciones de dinámica de fluídos mediante métodos
+de componentes para hacer simulaciones de dinámica de fluidos mediante métodos
 basados en partículas, utilizando la GPU como recurso computacional, y
 ofreciendo una interfaz de alto nivel en un lenguaje de programación dinámico.
 
@@ -102,10 +145,10 @@ A lo largo de la historia de la computación, ha existido una demanda creciente 
 computacional en las áreas de la ciencia y la ingeniería.  A medida que ha
 aumentado la capacidad de cómputo disponible, también han crecido el tamaño y la
 complejidad de los problemas que se necesita resolver, y en el caso de los
-problemas más complejos, no es posible hacerlo en un tiempo razonable.
+problemas más complejos, ni siquiera es posible hacerlo en un tiempo razonable.
 \cite{parallel-programming}
 
-La computación de alto desempeño~(HPC) es la utilización de supercomputadores y
+La computación de alto desempeño~(HPC) estudia la utilización de supercomputadores y
 clústers de computadores para resolver problemas computacionales complejos.  Los
 conceptos claves en HPC son:
 \begin{itemize}
@@ -119,8 +162,7 @@ conceptos claves en HPC son:
      (interoperabilidad).
 \end{itemize}
 La tendencia actual en sistemas de HPC y en diseño de arquitecturas de hardware
-ya no apunta a mejorar el rendimiento de las unidades de cómputo por separado,
-sino a explotar el paralelismo para obtener mejoras en el desempeño final de un
+apunta a explotar el paralelismo para obtener mejoras en el desempeño final de un
 programa, a pesar de la carga adicional que significa manejar la concurrencia
 (preferir high throughput sobre high performance).
 %\cite{hpc-gpu-cuda-slides}
@@ -171,8 +213,8 @@ Después aparecieron lenguajes de más alto nivel como Cg, HLSL y GLslang,
 que sin embargo aún utilizaban llamadas explícitas a las APIs gráficas.
 Debido a esto, la implementación de algoritmos de propósito general
 requería expresarlos en función de directivas gráficas~\cite[\S2.2]{brookgpu}.
-Programar la GPU implicaba crear shaders, programas que pintan píxeles a partir
-de los vértices, fragmentos y texturas que le sirven de entrada.
+Programar la GPU implicaba crear shaders ---programas que pintan píxeles a partir
+de los vértices---, fragmentos y texturas que le sirven de entrada.
 
 Las abstracciones gráficas (vértices, fragmentos, texturas, shaders)
 son análogas a un paradigma más general denominado \emph{stream processing},
@@ -240,26 +282,26 @@ Matlab también han comenzado a ofrecer integración transparente con GPUs~%
 \cite{nvidia-mathematica}~\cite{nvidia-matlab}.
 
 
-\subsection{Dinámica de fluídos computacional}
+\subsection{Dinámica de fluidos computacional}
 Una de las áreas de investigación que tradicionalmente ha tenido requerimientos
-exigentes de poder de cómputo para sus simulaciones es la dinámica de fluídos.
-La dinámica de fluídos computacional tiene importantes aplicaciones industriales
+exigentes de poder de cómputo para sus simulaciones es la dinámica de fluidos.
+La dinámica de fluidos computacional tiene importantes aplicaciones industriales
 en diversas áreas como la aeronáutica, la meteorología y la geología.
 
-La dinámica de fluídos estudia los fluídos en movimiento.  Los problemas de la
-dinámica de fluídos consisten en calcular varias propiedades del fluído (p.ej.
+La dinámica de fluidos estudia los fluidos en movimiento.  Los problemas de la
+dinámica de fluidos consisten en calcular varias propiedades del fluido (p.ej.
 la velocidad $\vel$, la presión $p$, la densidad $\rho$, la temperatura $T$) en
 todo el dominio del fluido, durante un intervalo de tiempo.  Estas propiedades
 se llaman variables de estado, y están relacionadas por leyes de conservación y
 ecuaciones de estado, que están expresadas como ecuaciones diferenciales parciales.
 
-En general los problemas de dinámica de fluídos no se pueden resolver
-analíticamente excepto en casos triviales.  La dinámica de fluídos computacional
+En general los problemas de dinámica de fluidos no se pueden resolver
+analíticamente excepto en casos triviales.  La dinámica de fluidos computacional
 (CFD) usa métodos numéricos para resolver estos problemas, que aun así siguen
 siendo complejos:  incluso con ecuaciones simplificadas y usando recursos de
 HPC, sólo es posible obtener soluciones aproximadas.
 
-La ecuación más importante de la dinámica de fluídos es la ecuación de
+La ecuación más importante de la dinámica de fluidos es la ecuación de
 Navier-Stokes, que describe la conservación de momentum en un fluido viscoso,
 de manera análoga a la segunda ley de Newton.  
 \begin{equation}
@@ -269,13 +311,13 @@ de manera análoga a la segunda ley de Newton.
 \end{equation}
 El término $\rho(\vel\cdot\nabla\vel)$ es denominado aceleración convectiva, y
 explica cómo cambia la velocidad con respecto a la posición en un instante de
-tiempo fijo.  Este es el único término no lineal de la ecuación, lo que acarrea
+tiempo fijo.  Éste es el único término no lineal de la ecuación, lo que acarrea
 problemas numéricos al discretizar el problema, y en la práctica representa el
-principal aporte a la turbulencia del fluído.
+principal aporte a la turbulencia del fluido.
 
-La turbulencia es el comportamiento caótico observado en los fluídos.  Es un
+La turbulencia es el comportamiento caótico observado en los fluidos.  Es un
 fenómeno cuya naturaleza no está bien comprendida, y es difícil de cuantificar y
-de describir.  Los métodos numéricos para fluídos turbulentos deben incorporar
+de describir.  Los métodos numéricos para fluidos turbulentos deben incorporar
 algún tipo de modelo de turbulencia, generalmente con base experimental, para
 dar cuenta de ella.  Además, la turbulencia emerge en varios niveles de escala,
 lo que exige alta resolución en la discretización de los problemas, y por lo
@@ -285,8 +327,8 @@ tanto más poder computacional.
 La mayoría de los métodos de CFD discretizan el dominio del problema utilizando
 algún tipo de malla.  Los métodos de partículas, en cambio, son una clase
 de métodos que utilizan partículas discretas que arrastran distribuciones
-localizadas de variables de estado por el fluído.  Las propiedades físicas del
-fluído pueden ser recuperadas como una superposición de las distribuciones
+localizadas de variables de estado por el fluido.  Las propiedades físicas del
+fluido pueden ser recuperadas como una superposición de las distribuciones
 de todas las partículas.
 
 Las métodos de partículas están basados en la formulación en coordenadas
@@ -300,16 +342,16 @@ sistema de ecuaciones diferenciales ordinarias:
     \frac{d\xi_p}{dt} &=
         \sum_{p'} \mathbf{F}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'});
 \end{align}
-donde $\xi$ es alguna propiedad del fluído, y $\mathbf{K}$ y $\mathbf{F}$ 
+donde $\xi$ es alguna propiedad del fluido, y $\mathbf{K}$ y $\mathbf{F}$ 
 representan la dinámica del sistema físico simulado.
 
 Una clase importante de métodos de partículas son los métodos de vórtices (VM),
 que han sido utilizados desde la década de 1930 para describir la evolución de
 estructuras vorticales en flujos incompresibles~\cite[\S2.2]{multiscale}.  Los
 VMs describen la evolución de la vorticidad $\vort = \nabla\times\vel$ del
-fluído.  En cada iteración, es necesario recuperar la velocidad a partir de la
+fluido.  En cada iteración, es necesario recuperar la velocidad a partir de la
 vorticidad para avanzar las partículas, y este paso es el más costoso en
-términos computacionales.  Por otra parte, en muchos fluídos la vorticidad es
+términos computacionales.  Por otra parte, en muchos fluidos la vorticidad es
 no nula sólo en una región reducida del dominio, lo que permite reducir el
 número de partículas necesarias para la simulación.
 
@@ -342,24 +384,24 @@ Todas estas características adicionales, que apuntan a lograr un balance
 conveniente entre precisión y tiempo de cómputo, complementan el framework 
 genérico para describir los métodos de partículas.  En general, cada iteración
 de una simulación tiene algunas etapas fijas, que están relacionadas con
-diferentes aspectos del fluído: la convección, la difusión, la satisfacción de
+diferentes aspectos del fluido: la convección, la difusión, la satisfacción de
 las condiciones de borde, la adaptación espacial, y (para los métodos de vórtices)
 la evaluación de la velocidad.  Para cada una de estas etapas, existen varios
 modelos que pueden ser usados:  por ejemplo, para la convección, se puede
 utilizar cualquier esquema de integración numérica de EDOs;  para la difusión, 
 se ha propuesto por lo menos siete esquemas diferentes~\cite[\S1.2]{barba}.
 
-Hasta hace algunos años, la escasez de bibliotecas científicas relevantes y la
+Hasta hace un par de años, la escasez de bibliotecas científicas relevantes y la
 dificultad de paralelizar eficientemente estos métodos fueron problemas que
 impidieron su implementación eficiente.  Recientemente, el ETH de Zúrich desarrolló una
 biblioteca paralela para métodos partícula-malla que facilita implementarlos
 eficientemente sobre arquitecturas paralelas de gran escala~\cite{ppm}.
 
-También ha habido trabajos recientes con simulaciones de fluídos usando partículas
+También ha habido trabajos recientes con simulaciones de fluidos usando partículas
 en GPUs, principalmente en el área de computación gráfica.  Los métodos usados
 para visualización sólo buscan conseguir realismo visual, y no resuelven con
 exactitud las ecuaciones que discretizan.  Una implementación de un método de
-vórtices publicada en julio de 2008 asegura ser la primera simulación de fluídos
+vórtices publicada en julio de 2008 asegura ser la primera simulación de fluidos
 exacta usando partículas en la GPU~\cite{vortex-gpu}.  Esta implementación está
 descrita en función de directivas gráficas, mapeando las partículas a texturas,
 en las que cada canal de color representa las propiedades de las partículas, y
@@ -378,13 +420,13 @@ expresando los pasos del algoritmo como shaders del pipeline gráfico.
 
 \subsection{Propuesta de tesis}
 Este proyecto de tesis consiste en el análisis, diseño e implementación de un
-prototipo de una biblioteca para hacer simulaciones de fluídos con las
+prototipo de una biblioteca para hacer simulaciones de fluidos con las
 siguientes características:
 \begin{itemize}
     \item el modelo utilizado será el framework genérico de métodos de
        partículas propuesto y descrito por Koumoutsakos~\cite{multiscale}.
-    \item los componentes de la simulación serán implementados en el lenguaje de
-        programación dinámico Python;
+    \item los componentes de la simulación serán implementados en un lenguaje de
+        programación dinámico de alto nivel;
     \item la simulación será acelerada transparentemente en hardware gráfico;
 \end{itemize}
 El propósito del proyecto es servir de prueba de concepto para el
@@ -394,15 +436,7 @@ que puedan explotar eficiente y transparentemente el hardware paralelo disponibl
 %Los objetivos del proyecto,  son obtener tiempos de ejecución mejores que los que se
 %pueden lograr usando sólo la CPU, 
 
-La factibilidad de implementar eficientemente métodos de partículas en hardware
-gráfico está sustentada por el trabajo de Rossinelli y Koumoutsakos, que
-describe un método de vórtices preciso y eficiente implementado en una
-GPU~\cite{vortex-gpu}.
-
-La factibilidad de integrar transparentemente la GPU con lenguajes de
-programación de propósito general a través de abstracciones de alto nivel está
-sustentada en varios desarrollos recientes, como los mencionados
-GPU++~\cite{gpupp}, PyGPU~\cite{pygpu} y PyCUDA~\cite{pycuda}.
+%La metodología propusta
 
 El modelo de ejecución de la GPU no incentiva el desarrollo de componentes
 totalmente desacoplados.  Como la compilación de los kernels se realiza en tiempo
@@ -415,6 +449,16 @@ metaprogramación e introspección.  La factibilidad de utilizar estas técnicas
 está sustentada en bibliotecas que hacen uso de ellas, como OpenFOAM~(en C++,
 para simulaciones de fluidos)~\cite{openfoam} y PyGPU~(en Python, para
 procesamiento de imágenes)~\cite{pygpu}.
+
+La factibilidad de implementar eficientemente métodos de partículas en hardware
+gráfico está sustentada por el trabajo de Rossinelli y Koumoutsakos, que
+describe un método de vórtices preciso y eficiente implementado en una
+GPU~\cite{vortex-gpu}.
+
+La factibilidad de integrar transparentemente la GPU con lenguajes de
+programación de propósito general a través de abstracciones de alto nivel está
+sustentada en varios desarrollos recientes, como los mencionados
+GPU++~\cite{gpupp}, PyGPU~\cite{pygpu} y PyCUDA~\cite{pycuda}.
 
 \newpage
 \begin{thebibliography}{99}
@@ -504,8 +548,8 @@ procesamiento de imágenes)~\cite{pygpu}.
 \section{Hipótesis de trabajo}
 Las hipótesis que sustentan este proyecto son las siguientes.
 \begin{enumerate}
-    \item Usando la GPU, es posible mejorar el rendimiento computacional de los métodos de
-        partículas.
+    \item Usando la GPU, es posible acelerar el rendimiento computacional de los
+        métodos de partículas.
     \item Es posible describir las simulaciones de fluidos en un lenguaje de
         alto nivel de manera genérica y descriptiva, abstrayendo los detalles de
         implementación.
@@ -531,7 +575,7 @@ Las hipótesis que sustentan este proyecto son las siguientes.
 \subsection{Objetivos específicos}
 \begin{enumerate}
    \item Diseñar e implementar un prototipo de biblioteca
-       para simulaciones de fluídos mediante métodos de partículas,
+       para simulaciones de fluidos mediante métodos de partículas,
        en un lenguaje de programación dinámico,
        basada en componentes intercambiables,
        y acelerada en hardware gráfico de manera transparente.
@@ -546,7 +590,7 @@ Las hipótesis que sustentan este proyecto son las siguientes.
 
 \newpage
 \section{Metodología y plan de trabajo}
-La metodología del proyecto se llevará a cabo en las siguientes etapas:
+El desarrollo del proyecto se llevará a cabo en las siguientes etapas:
 \begin{enumerate}
     \item \textbf{Estado del arte:}
         estudio del marco teórico de métodos de partículas, tecnologías de
@@ -608,7 +652,7 @@ siguientes:
         conferencias internacionales
         relacionados con
         computación de alto desempeño,
-        dinámica de fluídos computacional y
+        dinámica de fluidos computacional y
         lenguajes de programación.
 \end{enumerate}
  
