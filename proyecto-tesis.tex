@@ -322,7 +322,7 @@ HPC, sólo es posible obtener soluciones aproximadas.
 
 La ecuación más importante de la dinámica de fluidos es la ecuación de
 Navier-Stokes, que describe la conservación de momentum en un fluido viscoso,
-de manera análoga a la segunda ley de Newton.  
+de manera análoga a la segunda ley de Newton:
 \begin{equation}
     \rho\left(\frac{\partial\vel}{\partial t} + \vel\cdot\nabla\vel \right) =
     \text{fuerzas por unidad de volumen}.
@@ -361,7 +361,7 @@ sistema de ecuaciones diferenciales ordinarias:
     \frac{d\xi_p}{dt} &=
         \sum_{p'} \mathbf{F}(\pos_p, \pos_{p'}; \xi_p, \xi_{p'});
 \end{align}
-donde $\xi$ es alguna propiedad del fluido, y $\mathbf{K}$ y $\mathbf{F}$ 
+donde $\xi$ es alguna propiedad del fluido, y $\mathbf{K}$ y $\mathbf{F}$
 representan la dinámica del sistema físico simulado.
 
 Una clase importante de métodos de partículas son los métodos de vórtices (VM),
@@ -400,14 +400,14 @@ refinamientos adaptivos de malla
 y análisis multiresolución usando wavelets~\cite{multiresolution}.
 
 Todas estas características adicionales, que apuntan a lograr un balance
-conveniente entre precisión y tiempo de cómputo, complementan el framework 
-genérico para describir los métodos de partículas.  En general, cada iteración
-de una simulación tiene algunas etapas fijas, que están relacionadas con
-diferentes aspectos del fluido: la convección, la difusión, la satisfacción de
-las condiciones de borde, la adaptación espacial, y (para los métodos de vórtices)
-la evaluación de la velocidad.  Para cada una de estas etapas, existen varios
-modelos que pueden ser usados:  por ejemplo, para la convección, se puede
-utilizar cualquier esquema de integración numérica de EDOs;  para la difusión, 
+conveniente entre exactitud de la solución y tiempo de cómputo, complementan el
+framework genérico para describir los métodos de partículas.  En general, cada
+iteración de una simulación tiene algunas etapas fijas, que están relacionadas
+con diferentes aspectos del fluido: la convección, la difusión, la satisfacción
+de las condiciones de borde, la adaptación espacial, y (para los métodos de
+vórtices) la evaluación de la velocidad.  Para cada una de estas etapas, existen
+varios modelos que pueden ser usados:  por ejemplo, para la convección, se puede
+utilizar cualquier esquema de integración numérica de EDOs;  para la difusión,
 se ha propuesto por lo menos siete esquemas diferentes~\cite[\S1.2]{barba}.
 
 Hasta hace un par de años, la escasez de bibliotecas científicas relevantes y la
@@ -443,17 +443,17 @@ prototipo de una biblioteca para hacer simulaciones de fluidos con las
 siguientes características:
 \begin{itemize}
     \item el modelo utilizado será el framework genérico de métodos de
-       partículas propuesto y descrito por Koumoutsakos~\cite{multiscale}.
+       partículas propuesto y descrito por Koumoutsakos~\cite{multiscale};
     \item los componentes de la simulación serán implementados en un lenguaje de
         programación dinámico de alto nivel;
-    \item la simulación será acelerada transparentemente en hardware gráfico;
+    \item la simulación será acelerada transparentemente en hardware gráfico.
 \end{itemize}
 El propósito del proyecto es servir de prueba de concepto para el
 desarrollo de bibliotecas de propósito específico, en lenguajes de alto nivel,
 que puedan explotar eficiente y transparentemente el hardware paralelo disponible.
 
 %Los objetivos del proyecto,  son obtener tiempos de ejecución mejores que los que se
-%pueden lograr usando sólo la CPU, 
+%pueden lograr usando sólo la CPU,
 
 %La metodología propusta
 
@@ -461,7 +461,7 @@ El modelo de ejecución de la GPU no incentiva el desarrollo de componentes
 totalmente desacoplados.  Como la compilación de los kernels se realiza en tiempo
 de ejecución, y cargar los streams de datos es muy costoso, conviene
 que toda la simulación sea cargada en la GPU de manera unificada.  Para
-implementar eficientemente componentes desacoplados e intercambiables, la
+implementar eficientemente componentes desacoplados e intercambiables,
 la simulación no debe ser descrita algorítmicamente, sino declarativamente.  En
 lenguajes de alto nivel, es posible combinar ambos enfoques usando mecanismos de
 metaprogramación e introspección.  La factibilidad de utilizar estas técnicas
@@ -471,7 +471,7 @@ procesamiento de imágenes)~\cite{pygpu}.
 
 La factibilidad de implementar eficientemente métodos de partículas en hardware
 gráfico está sustentada por el trabajo de Rossinelli y Koumoutsakos, que
-describe un método de vórtices preciso y eficiente implementado en una
+describe un método de vórtices exacto y eficiente implementado en una
 GPU~\cite{vortex-gpu}.
 
 La factibilidad de integrar transparentemente la GPU con lenguajes de
