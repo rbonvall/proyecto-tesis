@@ -63,18 +63,16 @@
 %\emph{Debe ser suficientemente informativo, y contener una síntesis del proyecto, sus
 %objetivos, resultados esperados y palabras claves. }
 
-Las tarjetas gráficas (GPUs) han pasado a formar parte del
-repertorio de arquitecturas de computación de alto desempeño (HPC), como
-consecuencia de su evolución en términos de poder de cómputo y programabilidad,
-y su bajo costo.  Las GPUs son cada vez más utilizadas para acelerar
-aplicaciones no gráficas, que deben ser estructuradas según el paradigma de
-stream processing para explotar el paralelismo.
-
-La dinámica de fluidos computacional (CFD) es una de las disciplinas que 
-exige recursos de HPC. Los métodos de partículas, una clase de técnicas de CFD, 
-no han sido muy utilizados en la práctica, pero trabajos recientes han probado
-que gozan de ventajas numéricas sobre métodos tradicionales, y su implementación
-eficiente es un tema de investigación activo.
+Las tarjetas gráficas (GPUs) han pasado a formar parte del repertorio de
+arquitecturas de computación de alto desempeño (HPC), como consecuencia de su
+rápida evolución en términos de poder de cómputo y programabilidad, y su bajo
+costo.  Las GPUs son cada vez más utilizadas para acelerar aplicaciones
+intensivas en cómputo en dominios no relacionados con la computación gráfica.
+El modelo de programación de las GPUs está muy restringido por las limitaciones
+del hardware, y requiere gran atención a detalles de bajo nivel por parte del
+programador.  La integración de las GPUs en entornos de programación de alto
+nivel, incluyendo lenguajes altamente dinámicos, es un área de investigación
+activa.
 
 Las aplicaciones HPC suelen ser desarrolladas en lenguajes compilados, que
 optimizan el uso del hardware.  Los lenguajes interpretados sacrifican
@@ -82,6 +80,21 @@ performance por conveniencia de desarrollo, y no aprovechan el hardware
 directamente, pero pueden ser extendidos mediante componentes binarios.  Esto
 permite combinar la eficiencia de los lenguajes compilados con la flexibilidad
 de los lenguajes dinámicos.
+
+Una de las disciplinas que tradicionalmente ha exigido recursos de HPC es la
+dinámica de fluidos computacional (CFD).  Las simulaciones de fluidos son
+computacionalmente complejas, y tienen importantes aplicaciones industriales.
+Los métodos de partículas (PMs), una clase de técnicas de CFD, discretizan el
+dominio de un problema usando partículas que son arrastradas por el fluido, y
+resuelven las ecuaciones subyacentes en su formulación lagrangiana, en 
+contraste con la formulación euleriana en que se basa la mayoría de los métodos
+tradicionales.
+
+Los métodos de partículas no han sido muy utilizados en la práctica, debido a
+dificultades numéricas y de implementación.  Sin embargo, trabajos recientes han
+demostrado que gozan de importantes ventajas numéricas sobre otras clases de
+métodos, y que pueden ser implementados eficientemente en arquitecturas
+paralelas.
 
 Este proyecto de tesis consiste en el desarrollo de un prototipo de biblioteca
 para simulaciones de fluidos mediante métodos partículas, descritas usando
@@ -100,22 +113,32 @@ lenguajes de programación dinámicos.
 \section*{Abstract}
 Graphic processing units (GPUs) have become a integral part
 of the High Performance Computing architecture repertoire, as a consequence of
-their evolution in terms of computing power and programmability, and their
+their rapid evolution in terms of computing power and programmability, and their
 affordable cost.  GPUs are being increasingly used to accelerate non-graphic
-applications, that have to be described in terms of the stream-processing
-paradigm in order to exploit the parallelism.
-
-Computational Fluid Dynamics (CFD) is one of the disciplines that requires HPC
-resources.  Particle Methods, a CFD class of techniques, have not been widely
-used in practice, but recent works have proven that they enjoy numerical
-advantages over traditional methods, and their efficient implementation is a
-subject of current research.
+applications.  The GPU programming model is very restricted by the limitations
+of the hardware, and it forces the programmer to pay great attention to low-level
+details.  The integration of GPUs to high-level programming environments,
+including highly-dynamic languages, is an active area of research.
 
 HPC applications are usually developed in compiled languages, that optimize the
 use of hardware.  Interpreted languages sacrifice performance for development
 convenience, and do not take direct advantage of the hardware, but can be
 extended with binary components, enabling a compromise between the efficiency of
 compiled code and the flexibility of dynamic languages.
+
+One of the disciplines that traditionally has required HPC resources is
+Computational Fluid Dynamics (CFD).
+Fluid simulations are computationally complex, and have important industrial
+applications.
+Particle Methods (PMs), a CFD class of techniques, discretize the problem domain
+by using particles that get convected along the fluid, and solve the underlying
+equations in their Lagrangian formulation, as opposed to the Eulerian
+formulation that most traditional methods are based on.
+
+Particle Methods have not been widely used in practice, because of numerical and
+implementation issues.  However, recent works have proven that they enjoy
+important numerical advantages over other classes of methods, and that they can
+be efficiently implemented in parallel architectures.
 
 This thesis proposal consists in the development of a proof-of-concept
 particle-based fluid simulation library, described by high-level components in a
