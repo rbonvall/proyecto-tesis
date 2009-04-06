@@ -278,11 +278,10 @@ interfaces para programación.  Inicialmente, los procesadores de
 vértices y de fragmentos debían ser programados a nivel de lenguaje de
 ensamblado.
 Después aparecieron lenguajes de más alto nivel como Cg, HLSL y GLslang,
-que sin embargo aún utilizaban llamadas explícitas a las APIs gráficas.
-Debido a esto, la implementación de algoritmos de propósito general
-requería expresarlos en función de directivas gráficas~\cite[\S2.2]{brookgpu}.
-Programar la GPU implicaba crear shaders ---programas que pintan píxeles a partir
-de los vértices---, fragmentos y texturas que le sirven de entrada.
+que sin embargo aún utilizaban llamadas explícitas a las APIs gráficas,
+de modo que incluso algoritmos de propósito general
+debían ser implementados en función de directivas gráficas~\cite[\S2.2]{brookgpu},
+como shaders, fragmentos y texturas.
 
 Las abstracciones gráficas (vértices, fragmentos, texturas, shaders)
 son análogas a un paradigma más general denominado \emph{stream processing},
@@ -293,9 +292,9 @@ incorporado en lenguajes para GPUs más recientes como Brook y CUDA.
 A pesar de ofrecer modelos de programación cada vez más flexibles,
 las GPUs siguen siendo un entorno de programación extremadamente limitado,
 y no cualquier algoritmo es apropiado para ser acelerado en la GPU.
-En particular, la programación usando streams
-incentiva aplicaciones con alta intensidad aritmética
-(tasa de operaciones por ancho de banda de memoria)~\cite[\S2.1]{brookgpu}.
+En particular, las aplicaciones con alta intensidad aritmética (tasa de
+operaciones por ancho de banda de memoria) son las que mejor aprovechan las
+arquitecturas gráficas~\cite[\S2.1]{brookgpu}.
 Operaciones que son elementales en la CPU, como
 ejecución condicional y acceso directo a memoria, no permiten explotar el
 paralelismo y el ancho de banda de la GPU, e introducen penalizaciones de
@@ -712,7 +711,7 @@ El plan de trabajo propuesto es el siguiente:
     >{\raggedright\hspace{0pt}} p{0.3\textwidth} |%
 }\hline
     \textbf{Actividad} & \textbf{Plazo}\tnhl
-    Estado del arte           & 1 de febrero de 2009 \tnhl
+    Estado del arte           & 1 de mayo de 2009 \tnhl
     Prototipo de PMs en GPU   & 1 de marzo de 2009 \tnhl
     Prototipo de integración
     GPU-intérprete            & 1 de marzo de 2009 \tnhl
