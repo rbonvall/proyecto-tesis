@@ -1,17 +1,14 @@
-DOC = $(shell ls *.tex | sed -e 's/[.]tex$$//')
+TEXFILES = $(wildcard *.tex)
+PDFFILES = $(TEXFILES:.tex=.pdf)
 
-dvi: $(DOC).dvi
-pdf: $(DOC).pdf
+all: pdf
 
-%.dvi: %.tex
-	latex $<
-	latex $<
+pdf: $(PDFFILES)
+
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
-
+	@rubber --pdf $<
 clean:
-	@rm -vf *.{log,aux,dvi,pdf,nav,out,snm,toc}
+	@rubber --clean --pdf $(TEXFILES:.tex=)
 
-.PHONY: clean dvi pdf
+.PHONY: pdf clean all
 
